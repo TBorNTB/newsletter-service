@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MailCategory {
     private Long id;
+    private Long subscriberId;
     private MailCategoryName mailCategoryName;
 
     public static MailCategory of(MailCategoryName mailCategoryName) {

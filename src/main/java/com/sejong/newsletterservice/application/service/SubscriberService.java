@@ -5,7 +5,6 @@ import com.sejong.newsletterservice.domain.model.MailCategory;
 import com.sejong.newsletterservice.domain.model.Subscriber;
 import com.sejong.newsletterservice.domain.model.vo.SubscriberRequestVO;
 import com.sejong.newsletterservice.domain.repository.MailCategoryRepository;
-import com.sejong.newsletterservice.domain.repository.SubscriberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,7 @@ public class SubscriberService {
                 .map(MailCategory::of)
                 .toList();
 
-        Subscriber resultSubscriber = mailCategoryRepository.save(subscriber, mailCategories);
-        return SubscriberResponse.from(subscriber);
+        Subscriber resultSubscriber = mailCategoryRepository.saveCategoriesTo(subscriber, mailCategories);
+        return SubscriberResponse.from(resultSubscriber);
     }
 }
