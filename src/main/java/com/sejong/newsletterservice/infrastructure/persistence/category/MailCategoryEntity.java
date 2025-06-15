@@ -34,8 +34,8 @@ public class MailCategoryEntity {
         this.mailCategoryName = mailCategoryName;
     }
 
-    public static MailCategoryEntity from(MailCategoryName mailCategoryName, SubscriberEntity subscriber) {
-        MailCategoryEntity mailCategoryEntity = new MailCategoryEntity(mailCategoryName);
+    public static MailCategoryEntity from(MailCategory mailCategory, SubscriberEntity subscriber) {
+        MailCategoryEntity mailCategoryEntity = new MailCategoryEntity(mailCategory.getMailCategoryName());
 
         mailCategoryEntity.assignSubscriber(subscriber);
         return mailCategoryEntity;

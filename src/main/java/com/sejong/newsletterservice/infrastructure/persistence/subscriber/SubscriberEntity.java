@@ -2,6 +2,7 @@ package com.sejong.newsletterservice.infrastructure.persistence.subscriber;
 
 import com.sejong.newsletterservice.domain.model.MailCategory;
 import com.sejong.newsletterservice.domain.model.Subscriber;
+import com.sejong.newsletterservice.domain.model.enums.EmailFrequency;
 import com.sejong.newsletterservice.infrastructure.persistence.category.MailCategoryEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -9,6 +10,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,20 +28,22 @@ public class SubscriberEntity {
     @Column(unique = true, nullable = false, length = 50)
     private String email;
 
-    @Column(nullable = false)
-    private Long emailFrequency;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(50)",nullable = false)
+    private EmailFrequency emailFrequency;
 
     @DateTimeFormat
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "subscriber",orphanRemoval = true , fetch = FetchType.LAZY)
-    private List<MailCategoryEntity> mailCategories;
+    private List<MailCategoryEntity> mailCategories = new ArrayList<>();
 
     public static SubscriberEntity from(Subscriber subscriber) {
         return SubscriberEntity.builder()
                 .email(subscriber.getEmail())
                 .emailFrequency(subscriber.getEmailFrequency())
                 .createdAt(subscriber.getCreatedAt())
+                .mailCategories(new ArrayList<>())
                 .build();
     }
 
