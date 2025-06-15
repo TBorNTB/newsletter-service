@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MailCategoryRepository {
-    Subscriber save(Subscriber subscriber, List<MailCategory> mailCategories);
+    Subscriber saveCategoriesTo(Subscriber subscriber, List<MailCategory> mailCategories);
 }

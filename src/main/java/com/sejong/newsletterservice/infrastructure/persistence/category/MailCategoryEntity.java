@@ -44,6 +44,7 @@ public class MailCategoryEntity {
     public MailCategory toDomain() {
         return MailCategory.builder()
                 .id(id)
+                .subscriberId(subscriber.getId())
                 .mailCategoryName(mailCategoryName)
                 .build();
     }

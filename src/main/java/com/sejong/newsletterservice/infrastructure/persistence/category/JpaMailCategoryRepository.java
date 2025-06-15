@@ -15,7 +15,7 @@ public class JpaMailCategoryRepository implements MailCategoryRepository {
     private final SpringDataJpaMailCategoryRepository mailCategoryRepository;
 
     @Override
-    public Subscriber save(Subscriber subscriber, List<MailCategory> mailCategories) {
+    public Subscriber saveCategoriesTo(Subscriber subscriber, List<MailCategory> mailCategories) {
         SubscriberEntity subscriberEntity = SubscriberEntity.from(subscriber);
 
         List<MailCategoryEntity> categoryEntities = mailCategories.stream()
