@@ -14,5 +14,13 @@ public class Subscriber {
     private String email;
     private Long emailFrequency;
     private LocalDateTime createdAt;
-    private List<MailCategory> mailCategorys;
+    private List<MailCategory> mailCategories;
+
+    public static Subscriber of(String email, Long emailFrequency, LocalDateTime createdAt) {
+        return Subscriber.builder().
+                email(email)
+                .emailFrequency(emailFrequency)
+                .createdAt(createdAt)
+                .build();
+    }
 }
