@@ -10,7 +10,7 @@ import java.util.Random;
 public class VerificationService {
   private final Map<String,String> codeStorage = new HashMap<>();
 
-    public String generateVerificationCode(String email) {
+    public String generateAndStoreCode(String email) {
         String code = String.format("%06d", new Random().nextInt(999999));
         codeStorage.put(email,code);
         return code;
