@@ -39,6 +39,9 @@ dependencies {
 
     //메일관련
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    //thymleaf 관련
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 dependencyManagement {
