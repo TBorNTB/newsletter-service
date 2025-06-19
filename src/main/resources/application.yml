@@ -10,9 +10,27 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create  # ?? validate, create, create-drop ?
+      ddl-auto: create
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:
       hibernate:
         format_sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kkd06155@gmail.com           # Gmail 주소
+    password: qpdthnfnitrptrks              # 앱 비밀번호 (구글 계정 보안 → 앱 비밀번호 발급)
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  thymeleaf:
+    enabled: false  # 텍스트 메일만 보낼 경우 비활성화 (HTML 템플릿 안 쓸 경우)
+
+server:
+  port: 8080
