@@ -2,17 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <title>뉴스레터 인증번호</title>
 </head>
-<body style="font-family: Arial, sans-serif; padding: 24px;">
-<h2 style="color: #22c55e;">뉴스레터</h2>
-<p style="font-size: 16px;">인증번호</p>
-<div style="font-size: 32px; font-weight: bold; background-color: #f3f4f6;
-                padding: 20px; border-radius: 8px; text-align: center; margin: 16px 0;">
-    [[${code}]]
+<body style="margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f9f9f9;">
+<div style="max-width: 480px; margin: 40px auto; background-color: white; padding: 32px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+    <h1 style="color: #22c55e; font-size: 24px; margin-bottom: 12px;">뉴스레터</h1>
+    <p style="font-size: 16px; color: #333; margin: 0 0 24px;">인증번호</p>
+    <div style="font-size: 36px; font-weight: bold; background-color: #f3f4f6; color: #111827;
+                    padding: 24px; border-radius: 8px; text-align: center; margin-bottom: 24px;">
+        [[${code}]]
+    </div>
+    <p style="font-size: 14px; color: #6b7280; line-height: 1.6;">
+        뉴스레터 구독을 위한 인증번호입니다.<br>
+        위 인증번호를 입력하여 이메일 주소 인증을 완료해 주세요.
+    </p>
 </div>
-<p style="font-size: 14px; color: #6b7280;">
-    뉴스레터 구독을 위한 인증번호입니다.<br>
-    위 인증번호를 입력하여 이메일 주소 인증을 완료해 주세요.
-</p>
 </body>
 </html>
