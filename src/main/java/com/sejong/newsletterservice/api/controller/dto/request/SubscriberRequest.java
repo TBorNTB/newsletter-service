@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -27,7 +28,7 @@ public class SubscriberRequest {
     @NotNull
     private List<MailCategoryName> selectedCategories;
 
-    public SubscriberRequestVO toVO() {
-        return new SubscriberRequestVO(email, emailFrequency, selectedCategories);
+    public SubscriberRequestVO toVO( String code) {
+        return new SubscriberRequestVO(email, emailFrequency, selectedCategories,code);
     }
 }

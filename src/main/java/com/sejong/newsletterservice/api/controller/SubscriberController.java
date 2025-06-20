@@ -8,6 +8,7 @@ import com.sejong.newsletterservice.application.service.EmailService;
 import com.sejong.newsletterservice.application.service.SubscriberService;
 import com.sejong.newsletterservice.application.service.VerificationService;
 import com.sejong.newsletterservice.domain.model.vo.SubscriberRequestVO;
+import com.sejong.newsletterservice.infrastructure.redis.SubscriberCacheService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,41 +18,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/newsletter")
 public class SubscriberController {
 
     private final SubscriberService subscriberService;
-    private final EmailService emailService;
     private final VerificationService verificationService;
 
-    @PostMapping("/subscribe")
-    public ResponseEntity<SubscriberResponse> subscribe(
+    @PostMapping("/subscribe/verification-code")
+    public ResponseEntity<String> subscribeStart(
             @Valid @RequestBody SubscriberRequest subscriberRequest
     ) {
-        SubscriberRequestVO subscriberRequestVO = subscriberRequest.toVO();
+        String code = verificationService.generateCode();
+
+        SubscriberRequestVO subscriberRequestVO = subscriberRequest.toVO( code);
+        verificationService.sendVerification(subscriberRequestVO);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Verification email sent. Please check your inbox.");
+    }
+
+    @PostMapping("/subscribers/verify")
+    public ResponseEntity<SubscriberResponse> verifyCode(@RequestBody VerifyRequest request) {
+        SubscriberRequestVO subscriberRequestVO = verificationService.verifyEmailCode(request.getEmail(), request.getCode());
         SubscriberResponse response = subscriberService.register(subscriberRequestVO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
 
-    @PostMapping("/send-code")
-    public ResponseEntity<String> sendCode(
-            @RequestBody EmailRequest request
-    ) {
-        String code = verificationService.generateAndStoreCode(request.getEmail());
-        emailService.sendVerificationEmail(request.getEmail(), code);
-        return ResponseEntity.ok("Verification code sent.");
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(response);
     }
-
-    @PostMapping("/verify")
-    public ResponseEntity<String> verifyCode(@RequestBody VerifyRequest request) {
-        boolean isValid = verificationService.verifyEmailCode(request.getEmail(), request.getCode());
-        if (isValid) {
-            return ResponseEntity.ok("Subscription successful!");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid verification code.");
-        }
-    }
-
 }
