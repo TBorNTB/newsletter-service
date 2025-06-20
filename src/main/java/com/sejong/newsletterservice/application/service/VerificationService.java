@@ -1,22 +1,34 @@
 package com.sejong.newsletterservice.application.service;
 
+import com.sejong.newsletterservice.domain.model.vo.SubscriberRequestVO;
+import com.sejong.newsletterservice.infrastructure.redis.SubscriberCacheService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.cache.CacheManagerCustomizers;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class VerificationService {
-  private final Map<String,String> codeStorage = new HashMap<>();
+    private final EmailService emailService;
+    private final SubscriberCacheService subscriberCacheService;
 
-    public String generateAndStoreCode(String email) {
-        String code = String.format("%06d", new Random().nextInt(999999));
-        codeStorage.put(email,code);
-        return code;
+    public String generateCode() {
+        return String.format("%06d", new Random().nextInt(999999));
     }
 
-    public boolean verifyEmailCode(String email, String code) {
-        return codeStorage.get(email).equals(code);
+    public void sendVerification(SubscriberRequestVO subscriberRequestVO) {
+
+        subscriberCacheService.save(subscriberRequestVO);
+        emailService.sendVerificationEmail(subscriberRequestVO.email(), subscriberRequestVO.code());
+    }
+
+    public SubscriberRequestVO verifyEmailCode(String email, String inputCode) {
+        return subscriberCacheService.getEmailInfo(email)
+                .orElseThrow(() -> new IllegalStateException("인증 정보 없음: " + email));
     }
 }
