@@ -27,6 +27,8 @@ class SubscriberServiceTest {
     private FakeSubscriberRepository fakeSubscriberRepository;
     private FakeMailCategoryRepository fakeMailCategoryRepository;
 
+    private String CODE = "333333";
+
     @BeforeEach
     void setUp() {
         fakeSubscriberRepository = new FakeSubscriberRepository();
@@ -49,16 +51,13 @@ class SubscriberServiceTest {
     @Test
     void 이메일이_없으면_예외가_발생한다() {
         // expect
-        assertThrows(IllegalArgumentException.class, () -> {
-            new SubscriberRequestVO("", EmailFrequency.WEEKLY, List.of(MailCategoryName.CRYPTOGRAPHY));
-        });
+        assertThrows(IllegalArgumentException.class, SubscriberRequestFixture::이메일_없음_vo);
     }
 
     @Test
     void 카테고리를_선택하지_않으면_예외가_발생한다() {
+
         // expect
-        assertThrows(IllegalArgumentException.class, () -> {
-            new SubscriberRequestVO("user@example.com", EmailFrequency.WEEKLY, List.of());
-        });
+        assertThrows(IllegalArgumentException.class, SubscriberRequestFixture::카테고리_없음_vo);
     }
 }
