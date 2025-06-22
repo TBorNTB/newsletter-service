@@ -27,7 +27,7 @@ public class MailCategoryEntity {
     private SubscriberEntity subscriber;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "VARCHAR(50)", nullable = false)
+    @Column(name = "categoryName",columnDefinition = "VARCHAR(50)", nullable = false)
     private MailCategoryName mailCategoryName;
 
     public MailCategoryEntity(MailCategoryName mailCategoryName) {

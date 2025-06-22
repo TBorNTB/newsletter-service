@@ -10,8 +10,6 @@ import com.sejong.newsletterservice.domain.model.enums.MailCategoryName;
 import com.sejong.newsletterservice.domain.repository.CsKnowledgeRepository;
 import com.sejong.newsletterservice.domain.repository.SentLogRepository;
 import com.sejong.newsletterservice.domain.repository.SubscriberRepository;
-import com.sejong.newsletterservice.infrastructure.email.EmailNewsletterService;
-import com.sejong.newsletterservice.util.RandomProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -1,0 +1,47 @@
+package com.sejong.newsletterservice.infrastructure.email;
+
+import com.sejong.newsletterservice.application.email.EmailSender;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
+import java.io.UnsupportedEncodingException;
+
+
+@Service("newsletterSender")
+@RequiredArgsConstructor
+@Slf4j
+public class EmailNewsletterService implements EmailSender {
+
+    private final JavaMailSender mailSender;
+    private final EmailContentBuilder emailContentBuilder;
+
+    @Override
+    @Async
+    public void send(String to, String subject) {
+        try {
+            log.info("Sending email to " + to);
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
+
+            helper.setTo(to);
+            helper.setFrom("kkd06155@gmail.com", "뉴스레터");
+            helper.setSubject(subject);
+            boolean hasKnowledge = !subject.startsWith("<*>");
+            helper.setText(emailContentBuilder.buildNewsletterHtml(subject, "http://empty.com", hasKnowledge), true);
+
+            mailSender.send(message);
+            log.info("Email sent");
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            log.error("이메일 전송 중 예외 발생", e);
+            throw new RuntimeException("뉴스레터 이메일 전송 실패", e);
+        }
+    }
+}
+

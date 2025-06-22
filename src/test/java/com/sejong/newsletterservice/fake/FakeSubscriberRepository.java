@@ -1,6 +1,7 @@
 package com.sejong.newsletterservice.fake;
 
 import com.sejong.newsletterservice.domain.model.Subscriber;
+import com.sejong.newsletterservice.domain.model.enums.EmailFrequency;
 import com.sejong.newsletterservice.domain.repository.SubscriberRepository;
 
 import java.util.*;
@@ -43,5 +44,10 @@ public class FakeSubscriberRepository implements SubscriberRepository {
     public void clear() {
         store.clear();
         sequence = 1L;
+    }
+
+    @Override
+    public List<Subscriber> findByEmailFrequency(EmailFrequency frequency) {
+        return List.of();
     }
 }

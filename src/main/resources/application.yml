@@ -1,6 +1,6 @@
 spring:
   application:
-    name: user-service
+    name: newsletter-service
 
   datasource:
     url: jdbc:mysql://localhost:3306/newsletter?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -10,12 +10,17 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          batch_size: 50
+          default_batch_fetch_size: 100
+        order_inserts: true
+        order_updates: true
 
   mail:
     host: smtp.gmail.com
@@ -29,6 +34,7 @@ spring:
           starttls:
             enable: true
 
+
   thymeleaf:
     enabled: false
 
@@ -40,3 +46,8 @@ spring:
 
 server:
   port: 8080
+
+logging:
+  level:
+    org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcessor: DEBUG
+    com.sejong.newsletterservice.infrastructure.email: DEBUG
