@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "subscriber")
+@Table(name = "subscriber", indexes = {
+        @Index(name = "idx_subscriber_email_frequency", columnList = "emailFrequency")
+})
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,13 +31,13 @@ public class SubscriberEntity {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "varchar(50)",nullable = false)
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private EmailFrequency emailFrequency;
 
     @DateTimeFormat
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "subscriber",orphanRemoval = true , fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "subscriber", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MailCategoryEntity> mailCategories = new ArrayList<>();
 
     public static SubscriberEntity from(Subscriber subscriber) {
