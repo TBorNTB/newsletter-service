@@ -25,4 +25,5 @@ public class JpaMailCategoryRepository implements MailCategoryRepository {
         mailCategoryRepository.saveAll(categoryEntities);
         return subscriberEntity.toDomain();
     }
+
 }
