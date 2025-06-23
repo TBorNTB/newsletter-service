@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +21,19 @@ import java.io.UnsupportedEncodingException;
 @Slf4j
 public class EmailNewsletterService implements EmailSender {
 
-    private final JavaMailSender mailSender;
+    //확장성을 고려해 GamilService로 대체
+     private final JavaMailSender mailSender;
+
+    //private final GmailService gmailService;
     private final EmailContentBuilder emailContentBuilder;
 
     @Override
     @Async
+    @Retryable(
+            value = { MessagingException.class, UnsupportedEncodingException.class },
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 2000, multiplier = 2)
+    )
     public void send(String to, String subject) {
         try {
             log.info("Sending email to " + to);
@@ -43,5 +53,20 @@ public class EmailNewsletterService implements EmailSender {
             throw new RuntimeException("뉴스레터 이메일 전송 실패", e);
         }
     }
+
+//    @Override
+//    @Async
+//    public void send(String to, String subject) {
+//        try {
+//            log.info("Sending newsletter email to " + to);
+//            boolean hasKnowledge = !subject.startsWith("<*>");
+//            String html = emailContentBuilder.buildNewsletterHtml(subject, "http://empty.com", hasKnowledge);
+//            gmailService.sendHtmlEmail(to, subject, html);
+//            log.info("Email sent");
+//        } catch (Exception e) {
+//            log.error("뉴스레터 이메일 전송 실패", e);
+//            throw new RuntimeException("뉴스레터 이메일 전송 실패", e);
+//        }
+//    }
 }
 

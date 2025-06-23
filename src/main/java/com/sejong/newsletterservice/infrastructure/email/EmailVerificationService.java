@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +19,19 @@ import java.io.UnsupportedEncodingException;
 @Slf4j
 @RequiredArgsConstructor
 public class EmailVerificationService implements EmailSender {
-
+    //GmailService 확장으로 인해 주석처리
     private final JavaMailSender mailSender;
-    private final EmailContentBuilder emailContentBuilder;;
+
+    //private final GmailService gmailService;
+    private final EmailContentBuilder emailContentBuilder;
 
     @Override
     @Async
+    @Retryable(
+            value = { MessagingException.class, UnsupportedEncodingException.class },
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 2000, multiplier = 2)
+    )
     public void send(String to, String code) {
         try {
             log.info("Sending email to " + to);
@@ -42,5 +51,19 @@ public class EmailVerificationService implements EmailSender {
             throw new RuntimeException(e);
         }
     }
+
+//    @Override
+//    @Async
+//    public void send(String to, String code) {
+//        try {
+//            log.info("Sending verification email to " + to);
+//            String html = emailContentBuilder.buildVerificationHtml(code);
+//            gmailService.sendHtmlEmail(to, "[뉴스레터] 이메일 인증을 진행해주세요.", html);
+//            log.info("Email sent");
+//        } catch (Exception e) {
+//            log.error("이메일 전송 실패", e);
+//            throw new RuntimeException("이메일 전송 실패", e);
+//        }
+//    }
 
 }

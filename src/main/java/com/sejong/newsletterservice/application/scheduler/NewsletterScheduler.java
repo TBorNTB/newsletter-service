@@ -17,7 +17,7 @@ public class NewsletterScheduler {
 
     private final NewsletterService newsletterService;
 
-    @Scheduled(cron = "0 57 16 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 07 12 * * *", zone = "Asia/Seoul")
     public void sendDailyNewsletter() {
         log.info(" 매일 오전 7시 뉴스레터 전송 시작");
         newsletterService.sendNewsletters(EmailFrequency.DAILY);
