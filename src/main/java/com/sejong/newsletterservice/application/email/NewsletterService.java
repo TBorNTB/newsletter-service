@@ -23,11 +23,7 @@ public class NewsletterService {
 
     @Transactional
     public void sendNewsletters(EmailFrequency frequency) {
-        List<SentLog> sentLogs = subscriberRepository.findByEmailFrequency(frequency).stream()
-                .map(newsletterDomainService::sendNewsletterTo)
-                .flatMap(Optional::stream)
-                .toList();
-
-        sentLogRepository.saveAll(sentLogs);
+        subscriberRepository.findByEmailFrequency(frequency)
+                .forEach(newsletterDomainService::sendNewsletterTo);
     }
 }
