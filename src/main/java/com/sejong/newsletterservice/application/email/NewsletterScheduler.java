@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class NewsletterScheduler {
 
     private final NewsletterService newsletterService;
+    private final SentLogFlusher sentLogFlusher;
 
     @Scheduled(cron = "0 06 20 * * *", zone = "Asia/Seoul")
     public void sendDailyNewsletter() {
@@ -30,4 +31,14 @@ public class NewsletterScheduler {
         log.info(" 뉴스레터 전송 완료");
         return "메일 전송 완료";
     }
+
+    @GetMapping("/test-log-mail")
+    public String testLogMail() {
+        log.info("로그 저장 시작");
+        sentLogFlusher.flushSuccessLogsToDatabase();
+        log.info("로그 저장 완료");
+
+        return "로그저장 완료";
+    }
+
 }
