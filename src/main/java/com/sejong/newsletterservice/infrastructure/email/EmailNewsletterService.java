@@ -1,11 +1,11 @@
 package com.sejong.newsletterservice.infrastructure.email;
 
-import com.sejong.newsletterservice.application.email.EmailSender;
+import com.sejong.newsletterservice.application.email.NewsletterEmailSender;
+import com.sejong.newsletterservice.infrastructure.redis.SentLogCacheService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.retry.annotation.Backoff;
@@ -19,13 +19,14 @@ import java.io.UnsupportedEncodingException;
 @Service("newsletterSender")
 @RequiredArgsConstructor
 @Slf4j
-public class EmailNewsletterService implements EmailSender {
+public class NewsletterService implements NewsletterEmailSender {
 
     //확장성을 고려해 GamilService로 대체
      private final JavaMailSender mailSender;
 
     //private final GmailService gmailService;
     private final EmailContentBuilder emailContentBuilder;
+    private final SentLogCacheService sentLogCacheService;
 
     @Override
     @Async
@@ -34,8 +35,10 @@ public class EmailNewsletterService implements EmailSender {
             maxAttempts = 3,
             backoff = @Backoff(delay = 2000, multiplier = 2)
     )
-    public void send(String to, String subject) {
+    public void send(String to, String subject, Long csKnowledgeId) {
         try {
+
+
             log.info("Sending email to " + to);
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");

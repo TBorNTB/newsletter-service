@@ -34,6 +34,7 @@ public class RedisConfig {
                 ObjectMapper.DefaultTyping.NON_FINAL,
                 JsonTypeInfo.As.PROPERTY
         );
+        objectMapper.registerModule(new JavaTimeModule()); // LocalDateTime 처리
 
         // 직렬화기 생성자에 ObjectMapper 주입
         Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(objectMapper, Object.class);
