@@ -24,7 +24,7 @@ public class SubscriberController {
     ) {
         String code = verificationService.generateCode();
 
-        SubscriberRequestVO subscriberRequestVO = subscriberRequest.toVO( code);
+        SubscriberRequestVO subscriberRequestVO = subscriberRequest.toVO(code);
         verificationService.sendVerification(subscriberRequestVO);
         return ResponseEntity
                 .status(HttpStatus.OK)
