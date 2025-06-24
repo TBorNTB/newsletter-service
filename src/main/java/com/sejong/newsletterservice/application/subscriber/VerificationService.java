@@ -1,26 +1,20 @@
 package com.sejong.newsletterservice.application.subscriber;
 
-import com.sejong.newsletterservice.application.email.EmailSender;
+import com.sejong.newsletterservice.application.email.VerificationEmailSender;
 import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import com.sejong.newsletterservice.infrastructure.redis.SubscriberCacheService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class VerificationService {
 
-    private final EmailSender emailSender;
+    private final VerificationEmailSender verificationEmailSender;
     private final SubscriberCacheService subscriberCacheService;
-
-    public VerificationService(
-            @Qualifier("verificationSender") EmailSender emailSender,
-            SubscriberCacheService subscriberCacheService
-    ) {
-        this.emailSender = emailSender;
-        this.subscriberCacheService = subscriberCacheService;
-    }
 
     public String generateCode() {
         return String.format("%06d", new Random().nextInt(999999));
@@ -29,7 +23,7 @@ public class VerificationService {
     public void sendVerification(SubscriberRequestVO subscriberRequestVO) {
 
         subscriberCacheService.save(subscriberRequestVO);
-        emailSender.send(subscriberRequestVO.email(), subscriberRequestVO.code());
+        verificationEmailSender.send(subscriberRequestVO.email(), subscriberRequestVO.code());
     }
 
     public SubscriberRequestVO verifyEmailCode(String email, String inputCode) {

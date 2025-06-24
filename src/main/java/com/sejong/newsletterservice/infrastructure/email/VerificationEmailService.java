@@ -17,7 +17,7 @@ import java.io.UnsupportedEncodingException;
 @Service("verificationSender")
 @Slf4j
 @RequiredArgsConstructor
-public class VerificationEmailVerificationService implements VerificationEmailSender {
+public class VerificationEmailService implements VerificationEmailSender {
     //GmailService 확장으로 인해 주석처리
     private final JavaMailSender mailSender;
 

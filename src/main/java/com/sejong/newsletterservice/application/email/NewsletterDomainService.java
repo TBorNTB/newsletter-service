@@ -5,6 +5,7 @@ import com.sejong.newsletterservice.core.sentlog.SentLog;
 import com.sejong.newsletterservice.core.subscriber.Subscriber;
 import com.sejong.newsletterservice.core.csknowledge.CsKnowledgeRepository;
 import com.sejong.newsletterservice.core.common.RandomProvider;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -14,21 +15,12 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class NewsletterDomainService {
 
     private final CsKnowledgeRepository csKnowledgeRepository;
-    private final EmailSender emailSender;
+    private final NewsletterEmailSender newsletterEmailSender;
     private final RandomProvider randomProvider;
-
-    public NewsletterDomainService(
-            CsKnowledgeRepository csKnowledgeRepository,
-            @Qualifier("newsletterSender") EmailSender emailSender,
-            RandomProvider randomProvider
-    ) {
-        this.csKnowledgeRepository = csKnowledgeRepository;
-        this.emailSender = emailSender;
-        this.randomProvider = randomProvider;
-    }
 
     Optional<SentLog> sendNewsletterTo(Subscriber subscriber) {
         Optional<CsKnowledge> knowledge = subscriber.pickNextKnowledgeToSend(csKnowledgeRepository, randomProvider);
@@ -41,12 +33,12 @@ public class NewsletterDomainService {
     }
 
     private Optional<SentLog> sendEmptyAndLog(Subscriber subscriber) {
-        emailSender.send(subscriber.getEmail(), "<*>[뉴스레터] 지식이 없습니다 😢");
+        newsletterEmailSender.send(subscriber.getEmail(), "<*>[뉴스레터] 지식이 없습니다 😢",null);
         return Optional.empty();
     }
 
     private Optional<SentLog> sendAndLog(Subscriber subscriber, CsKnowledge knowledge) {
-        emailSender.send(subscriber.getEmail(), knowledge.getTitle());
+        newsletterEmailSender.send(subscriber.getEmail(), knowledge.getTitle(), knowledge.getId());
         return Optional.of(SentLog.of(subscriber.getEmail(), knowledge.getId(), LocalDateTime.now()));
     }
 }

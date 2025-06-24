@@ -16,17 +16,16 @@ import org.springframework.stereotype.Service;
 import java.io.UnsupportedEncodingException;
 
 
-@Service("newsletterSender")
+@Service
 @RequiredArgsConstructor
 @Slf4j
-public class NewsletterService implements NewsletterEmailSender {
+public class EmailNewsletterService implements NewsletterEmailSender {
 
     //확장성을 고려해 GamilService로 대체
      private final JavaMailSender mailSender;
 
     //private final GmailService gmailService;
     private final EmailContentBuilder emailContentBuilder;
-    private final SentLogCacheService sentLogCacheService;
 
     @Override
     @Async
@@ -37,8 +36,6 @@ public class NewsletterService implements NewsletterEmailSender {
     )
     public void send(String to, String subject, Long csKnowledgeId) {
         try {
-
-
             log.info("Sending email to " + to);
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
@@ -56,6 +53,7 @@ public class NewsletterService implements NewsletterEmailSender {
             throw new RuntimeException("뉴스레터 이메일 전송 실패", e);
         }
     }
+
 
 //    @Override
 //    @Async
