@@ -1,22 +1,15 @@
 package com.sejong.newsletterservice.application.service;
 
-import com.sejong.newsletterservice.api.controller.dto.response.SubscriberResponse;
-import com.sejong.newsletterservice.domain.model.MailCategory;
-import com.sejong.newsletterservice.domain.model.Subscriber;
-import com.sejong.newsletterservice.domain.model.enums.EmailFrequency;
-import com.sejong.newsletterservice.domain.model.enums.MailCategoryName;
-import com.sejong.newsletterservice.domain.model.vo.SubscriberRequestVO;
+import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberResponse;
+import com.sejong.newsletterservice.application.subscriber.SubscriberService;
+import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import com.sejong.newsletterservice.fake.FakeMailCategoryRepository;
 import com.sejong.newsletterservice.fake.FakeSubscriberRepository;
-import com.sejong.newsletterservice.fixture.SubscriberFixture;
 import com.sejong.newsletterservice.fixture.SubscriberRequestFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;

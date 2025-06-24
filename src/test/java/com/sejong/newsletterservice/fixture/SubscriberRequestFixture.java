@@ -1,11 +1,10 @@
 package com.sejong.newsletterservice.fixture;
 
-import com.sejong.newsletterservice.api.controller.dto.request.SubscriberRequest;
-import com.sejong.newsletterservice.domain.model.enums.EmailFrequency;
-import com.sejong.newsletterservice.domain.model.enums.MailCategoryName;
-import com.sejong.newsletterservice.domain.model.vo.SubscriberRequestVO;
+import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriberRequest;
+import com.sejong.newsletterservice.core.enums.EmailFrequency;
+import com.sejong.newsletterservice.core.enums.MailCategoryName;
+import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 

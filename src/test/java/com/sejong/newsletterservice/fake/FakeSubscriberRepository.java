@@ -1,8 +1,8 @@
 package com.sejong.newsletterservice.fake;
 
-import com.sejong.newsletterservice.domain.model.Subscriber;
-import com.sejong.newsletterservice.domain.model.enums.EmailFrequency;
-import com.sejong.newsletterservice.domain.repository.SubscriberRepository;
+import com.sejong.newsletterservice.core.subscriber.Subscriber;
+import com.sejong.newsletterservice.core.enums.EmailFrequency;
+import com.sejong.newsletterservice.core.subscriber.SubscriberRepository;
 
 import java.util.*;
 
