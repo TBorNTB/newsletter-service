@@ -2,5 +2,5 @@ package com.sejong.newsletterservice.application.email;
 
 
 public interface VerificationEmailSender {
-    void send(String to, String subjectOrCode);
+    String send(String to, String subjectOrCode);
 }

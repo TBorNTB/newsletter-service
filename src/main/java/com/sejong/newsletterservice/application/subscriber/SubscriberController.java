@@ -3,6 +3,7 @@ package com.sejong.newsletterservice.application.subscriber;
 import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriberRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.request.VerifyRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberResponse;
+import com.sejong.newsletterservice.application.subscriber.dto.response.VerificationResponse;
 import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,16 +20,16 @@ public class SubscriberController {
     private final VerificationService verificationService;
 
     @PostMapping("/subscribe/verification-code")
-    public ResponseEntity<String> subscribeStart(
+    public ResponseEntity<VerificationResponse> subscribeStart(
             @Valid @RequestBody SubscriberRequest subscriberRequest
     ) {
         String code = verificationService.generateCode();
 
         SubscriberRequestVO subscriberRequestVO = subscriberRequest.toVO(code);
-        verificationService.sendVerification(subscriberRequestVO);
+        VerificationResponse verificationResponse = verificationService.sendVerification(subscriberRequestVO);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body("Verification email sent. Please check your inbox.");
+                .body(verificationResponse);
     }
 
     @PostMapping("/subscribers/verify")
@@ -39,6 +40,4 @@ public class SubscriberController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(response);
     }
-
-
 }
