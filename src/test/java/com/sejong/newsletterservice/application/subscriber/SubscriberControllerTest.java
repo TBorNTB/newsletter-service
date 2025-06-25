@@ -1,9 +1,6 @@
-package com.sejong.newsletterservice.api.controller;
+package com.sejong.newsletterservice.application.subscriber;
 
 import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriberRequest;
-import com.sejong.newsletterservice.application.subscriber.SubscriberController;
-import com.sejong.newsletterservice.application.subscriber.SubscriberService;
-import com.sejong.newsletterservice.application.subscriber.VerificationService;
 import com.sejong.newsletterservice.fixture.SubscriberRequestFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

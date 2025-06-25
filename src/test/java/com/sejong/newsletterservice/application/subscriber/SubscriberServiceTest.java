@@ -1,7 +1,6 @@
-package com.sejong.newsletterservice.application.service;
+package com.sejong.newsletterservice.application.subscriber;
 
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberResponse;
-import com.sejong.newsletterservice.application.subscriber.SubscriberService;
 import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import com.sejong.newsletterservice.fake.FakeMailCategoryRepository;
 import com.sejong.newsletterservice.fake.FakeSubscriberRepository;
@@ -12,7 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 @ExtendWith(MockitoExtension.class)
 class SubscriberServiceTest {
