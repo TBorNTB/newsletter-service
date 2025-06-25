@@ -25,7 +25,7 @@ public class VerificationService {
 
         subscriberCacheService.save(subscriberRequestVO);
         String email = verificationEmailSender.send(subscriberRequestVO.email(), subscriberRequestVO.code());
-        return VerificationResponse.of(email,"이메일이2 성공적으로 전송되었습니다.");
+        return VerificationResponse.of(email,"이메일이 성공적으로 전송되었습니다.");
     }
 
     public SubscriberRequestVO verifyEmailCode(String email, String inputCode) {
