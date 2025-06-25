@@ -30,6 +30,7 @@ public class VerificationService {
 
     public SubscriberRequestVO verifyEmailCode(String email, String inputCode) {
         return subscriberCacheService.getEmailInfo(email)
-                .orElseThrow(() -> new IllegalArgumentException("인증 정보 없음: " + email));
+                .filter(info -> info.code().equals(inputCode))
+                .orElseThrow(() -> new IllegalArgumentException("인증 정보 없음 또는 코드 불일치: " + email));
     }
 }
