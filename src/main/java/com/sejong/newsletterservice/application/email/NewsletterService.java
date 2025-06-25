@@ -19,7 +19,6 @@ public class NewsletterService {
 
     private final SubscriberRepository subscriberRepository;
     private final NewsletterDomainService newsletterDomainService;
-    private final SentLogRepository sentLogRepository;
 
     @Transactional
     public void sendNewsletters(EmailFrequency frequency) {

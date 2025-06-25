@@ -1,6 +1,7 @@
 package com.sejong.newsletterservice.infrastructure.email;
 
 import com.sejong.newsletterservice.application.email.VerificationEmailSender;
+import com.sejong.newsletterservice.application.exception.EmailSendException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -44,10 +45,15 @@ public class VerificationEmailService implements VerificationEmailSender {
 
             mailSender.send(message);
             log.info("Email sent");
-        } catch (MessagingException e ) {
-            throw new RuntimeException("이메일 전송 실패", e);
+        }catch (MessagingException e) {
+            log.error("MessagingException occurred while sending email to {}: {}", to, e.getMessage(), e);
+            throw new EmailSendException("메일 전송 중 오류가 발생했습니다.", e);
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            log.error("UnsupportedEncodingException occurred while setting sender address: {}", e.getMessage(), e);
+            throw new EmailSendException("보내는 사람 주소 인코딩 오류", e);
+        } catch (Exception e) {
+            log.error("Unexpected error occurred while sending email to {}: {}", to, e.getMessage(), e);
+            throw new EmailSendException("예상치 못한 오류로 인해 메일 전송 실패", e);
         }
     }
 

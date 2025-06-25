@@ -28,6 +28,6 @@ public class VerificationService {
 
     public SubscriberRequestVO verifyEmailCode(String email, String inputCode) {
         return subscriberCacheService.getEmailInfo(email)
-                .orElseThrow(() -> new IllegalStateException("인증 정보 없음: " + email));
+                .orElseThrow(() -> new IllegalArgumentException("인증 정보 없음: " + email));
     }
 }

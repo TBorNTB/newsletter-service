@@ -28,18 +28,7 @@ public class JpaCsKnowledgeRepository implements CsKnowledgeRepository {
 
     @Override
     public Optional<CsKnowledge> findUnsentKnowledge(MailCategoryName categoryName, String email) {
-        System.out.println("findUnsentKnowledge called");
         Optional<CsKnowledgeEntity> randomUnsent = repository.findRandomUnsent(categoryName.name(), email);
-
-
-
-        if(randomUnsent.isEmpty()) {
-            log.info("데이터가 없졍");
-        }
-        else{
-            log.info("데이터가 있엉");
-        }
         return randomUnsent.map(CsKnowledgeEntity::toDomain);
-
     }
 }

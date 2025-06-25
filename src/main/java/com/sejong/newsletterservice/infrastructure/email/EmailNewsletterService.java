@@ -1,6 +1,7 @@
 package com.sejong.newsletterservice.infrastructure.email;
 
 import com.sejong.newsletterservice.application.email.NewsletterEmailSender;
+import com.sejong.newsletterservice.application.exception.EmailSendException;
 import com.sejong.newsletterservice.infrastructure.redis.SentLogCacheService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -48,9 +49,15 @@ public class EmailNewsletterService implements NewsletterEmailSender {
 
             mailSender.send(message);
             log.info("Email sent");
-        } catch (MessagingException | UnsupportedEncodingException e) {
-            log.error("이메일 전송 중 예외 발생", e);
-            throw new RuntimeException("뉴스레터 이메일 전송 실패", e);
+        } catch (MessagingException e) {
+            log.error("MessagingException occurred while sending email to {}: {}", to, e.getMessage(), e);
+            throw new EmailSendException("메일 전송 중 오류가 발생했습니다.", e);
+        } catch (UnsupportedEncodingException e) {
+            log.error("UnsupportedEncodingException occurred while setting sender address: {}", e.getMessage(), e);
+            throw new EmailSendException("보내는 사람 주소 인코딩 오류", e);
+        } catch (Exception e) {
+            log.error("Unexpected error occurred while sending email to {}: {}", to, e.getMessage(), e);
+            throw new EmailSendException("예상치 못한 오류로 인해 메일 전송 실패", e);
         }
     }
 
