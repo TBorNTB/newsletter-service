@@ -20,5 +20,4 @@ public class SubscriberResponse {
                 .message("구독이 정상적으로 완료되었습니다.")
                 .build();
     }
-
 }
