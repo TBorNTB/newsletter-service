@@ -17,11 +17,18 @@ public class NewsletterScheduler {
     private final NewsletterService newsletterService;
     private final SentLogFlusher sentLogFlusher;
 
-    @Scheduled(cron = "0 06 20 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 7 * * *", zone = "Asia/Seoul")
     public void sendDailyNewsletter() {
         log.info(" 매일 오전 7시 뉴스레터 전송 시작");
         newsletterService.sendNewsletters(EmailFrequency.DAILY);
         log.info(" 뉴스레터 전송 완료");
+    }
+
+    @Scheduled(cron = "0 5 7 * * *", zone = "Asia/Seoul")
+    public void storeSentLog() {
+        log.info("전송된 메일 기록을 데이터베이스에 저장 시작");
+        sentLogFlusher.flushSuccessLogsToDatabase();
+        log.info("로그 저장 완료");
     }
 
     @GetMapping("/test-mail")
@@ -37,8 +44,6 @@ public class NewsletterScheduler {
         log.info("로그 저장 시작");
         sentLogFlusher.flushSuccessLogsToDatabase();
         log.info("로그 저장 완료");
-
         return "로그저장 완료";
     }
-
 }
