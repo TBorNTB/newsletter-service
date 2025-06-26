@@ -21,8 +21,10 @@ public class NewsletterService {
     private final NewsletterDomainService newsletterDomainService;
 
     @Transactional
-    public void sendNewsletters(EmailFrequency frequency) {
-        subscriberRepository.findByEmailFrequency(frequency)
-                .forEach(newsletterDomainService::sendNewsletterTo);
+    public Long sendNewsletters(EmailFrequency frequency) {
+        return subscriberRepository.findByEmailFrequency(frequency).stream()
+                .map(newsletterDomainService::sendNewsletterTo)
+                .filter(Optional::isPresent)
+                .count();
     }
 }

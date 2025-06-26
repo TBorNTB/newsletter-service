@@ -35,6 +35,27 @@ public class SubscriberFixture {
                 .build();
     }
 
+    public static Subscriber 구독자_카테고리_포함(Long subscriberId, String email) {
+        return Subscriber.builder()
+                .id(subscriberId)
+                .email(email)
+                .emailFrequency(EmailFrequency.DAILY)
+                .createdAt(LocalDateTime.of(2024, 1, 1, 0, 0))
+                .mailCategories(List.of(
+                        MailCategory.builder()
+                                .id(1L)
+                                .mailCategoryName(MailCategoryName.CRYPTOGRAPHY)
+                                .subscriberId(1L)
+                                .build(),
+                        MailCategory.builder()
+                                .id(2L)
+                                .mailCategoryName(MailCategoryName.DIGITAL_FORENSICS)
+                                .subscriberId(1L)
+                                .build()
+                ))
+                .build();
+    }
+
     public static Subscriber 이메일_중복_구독자(String email) {
         return Subscriber.of(email, EmailFrequency.DAILY, LocalDateTime.now());
     }

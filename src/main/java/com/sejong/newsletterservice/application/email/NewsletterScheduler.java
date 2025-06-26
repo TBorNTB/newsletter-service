@@ -20,8 +20,8 @@ public class NewsletterScheduler {
     @Scheduled(cron = "0 0 7 * * *", zone = "Asia/Seoul")
     public void sendDailyNewsletter() {
         log.info(" 매일 오전 7시 뉴스레터 전송 시작");
-        newsletterService.sendNewsletters(EmailFrequency.DAILY);
-        log.info(" 뉴스레터 전송 완료");
+        Long sentLogCount = newsletterService.sendNewsletters(EmailFrequency.DAILY);
+        log.info(" 뉴스레터 전송 완료 기록된 로그 수 : {}",sentLogCount);
     }
 
     @Scheduled(cron = "0 5 7 * * *", zone = "Asia/Seoul")
