@@ -1,11 +1,10 @@
 package com.sejong.newsletterservice.fake;
 
-import com.sejong.newsletterservice.domain.model.MailCategory;
-import com.sejong.newsletterservice.domain.model.Subscriber;
-import com.sejong.newsletterservice.domain.repository.MailCategoryRepository;
+import com.sejong.newsletterservice.core.mailgategory.MailCategory;
+import com.sejong.newsletterservice.core.subscriber.Subscriber;
+import com.sejong.newsletterservice.core.mailgategory.MailCategoryRepository;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class FakeMailCategoryRepository implements MailCategoryRepository {
 

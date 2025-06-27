@@ -1,6 +1,6 @@
 package com.sejong.newsletterservice.infrastructure.redis;
 
-import com.sejong.newsletterservice.domain.model.vo.SubscriberRequestVO;
+import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SubscriberCacheService {
     private final RedisTemplate<String, Object> redisTemplate;
-    private static final Duration TTL = Duration.ofMinutes(5);
+    private static final Duration TTL = Duration.ofMinutes(10);
 
     private String key(String email) {
         return "verify:" + email;
