@@ -40,4 +40,9 @@ public class SubscriberController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(response);
     }
+
+    @GetMapping("/health-check")
+    public ResponseEntity<String> healthCheck() {
+        return ResponseEntity.status(HttpStatus.OK).body("OK");
+    }
 }
