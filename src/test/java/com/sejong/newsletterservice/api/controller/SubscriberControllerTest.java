@@ -3,6 +3,7 @@ package com.sejong.newsletterservice.api.controller;
 import com.sejong.newsletterservice.api.controller.dto.request.SubscriberRequest;
 import com.sejong.newsletterservice.api.controller.dto.response.SubscriberResponse;
 import com.sejong.newsletterservice.application.service.SubscriberService;
+import com.sejong.newsletterservice.application.service.VerificationService;
 import com.sejong.newsletterservice.fixture.SubscriberRequestFixture;
 import com.sejong.newsletterservice.fixture.SubscriberResponseFixture;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,8 @@ class SubscriberControllerTest {
 
     @Mock
     private SubscriberService subscriberService;
+    @Mock
+    private VerificationService verificationService;
 
     @InjectMocks
     private SubscriberController subscriberController;
@@ -40,18 +43,12 @@ class SubscriberControllerTest {
 
     @Test
     void 구독_요청을_정상적으로_처리한다() {
-        // given
-        SubscriberResponse mockResponse = SubscriberResponseFixture.기본_요청();
-        when(subscriberService.register(any())).thenReturn(mockResponse);
-
         // when
-        ResponseEntity<SubscriberResponse> response = subscriberController.subscribe(request);
+        ResponseEntity<String> response = subscriberController.subscribeStart(request);
 
         // then
-        assertThat(response.getStatusCodeValue()).isEqualTo(201);
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getEmail()).isEqualTo("user@example.com");
-
-        verify(subscriberService, times(1)).register(any());
+        assertThat(response.getBody()).isEqualTo("Verification email sent. Please check your inbox.");
     }
 }

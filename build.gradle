@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -36,6 +36,18 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    //메일관련
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    //thymleaf 관련
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // 스웨거 사용 의존성
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 }
 
 dependencyManagement {
