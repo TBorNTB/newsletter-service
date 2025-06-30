@@ -3,4 +3,25 @@ spring:
     name: newsletter-service
 
   profiles:
-    active: prod # 혹은 prod 로 바꿔서 하면 됩니다~
+    active: local # local 혹은 prod로 바꿔서 하면 됩니다~
+
+  eureka:
+    instance:
+      instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+      prefer-ip-address: true
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+      service-url:
+        defaultZone: http://127.0.0.1:8761/eureka
+
+springdoc:
+  api-docs:
+    version: openapi_3_0
+    enabled: true
+    path: /v3/api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
