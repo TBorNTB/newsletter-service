@@ -1,11 +1,10 @@
 package com.sejong.newsletterservice.api.controller;
 
-import com.sejong.newsletterservice.api.controller.dto.request.SubscriberRequest;
-import com.sejong.newsletterservice.api.controller.dto.response.SubscriberResponse;
-import com.sejong.newsletterservice.application.service.SubscriberService;
-import com.sejong.newsletterservice.application.service.VerificationService;
+import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriberRequest;
+import com.sejong.newsletterservice.application.subscriber.SubscriberController;
+import com.sejong.newsletterservice.application.subscriber.SubscriberService;
+import com.sejong.newsletterservice.application.subscriber.VerificationService;
 import com.sejong.newsletterservice.fixture.SubscriberRequestFixture;
-import com.sejong.newsletterservice.fixture.SubscriberResponseFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,13 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)

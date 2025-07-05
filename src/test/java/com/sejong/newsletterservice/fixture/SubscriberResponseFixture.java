@@ -1,11 +1,6 @@
 package com.sejong.newsletterservice.fixture;
 
-import com.sejong.newsletterservice.api.controller.dto.request.SubscriberRequest;
-import com.sejong.newsletterservice.api.controller.dto.response.SubscriberResponse;
-import com.sejong.newsletterservice.domain.model.enums.EmailFrequency;
-import com.sejong.newsletterservice.domain.model.enums.MailCategoryName;
-
-import java.util.List;
+import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberResponse;
 
 public class SubscriberResponseFixture {
     public static SubscriberResponse 기본_요청() {

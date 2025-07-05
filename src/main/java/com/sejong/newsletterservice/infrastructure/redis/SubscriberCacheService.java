@@ -1,6 +1,6 @@
 package com.sejong.newsletterservice.infrastructure.redis;
 
-import com.sejong.newsletterservice.domain.model.vo.SubscriberRequestVO;
+import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
