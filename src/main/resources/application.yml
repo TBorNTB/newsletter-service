@@ -1,42 +1,27 @@
 spring:
   application:
-    name: user-service
+    name: newsletter-service
 
-  datasource:
-    url: jdbc:mysql://localhost:3306/newsletter?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
+  profiles:
+    active: local # local 혹은 prod로 바꿔서 하면 됩니다~
 
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    properties:
-      hibernate:
-        format_sql: true
+  eureka:
+    instance:
+      instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+      prefer-ip-address: true
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+      service-url:
+        defaultZone: http://127.0.0.1:8761/eureka
 
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: kkd06155@gmail.com
-    password: qpdthnfnitrptrks
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
-  thymeleaf:
-    enabled: false
-
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      timeout: 5000
-
-server:
-  port: 8080
+springdoc:
+  api-docs:
+    version: openapi_3_0
+    enabled: true
+    path: /v3/api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html

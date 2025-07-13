@@ -1,11 +1,12 @@
 package com.sejong.newsletterservice.fixture;
 
-import com.sejong.newsletterservice.api.controller.dto.request.SubscriberRequest;
-import com.sejong.newsletterservice.domain.model.enums.EmailFrequency;
-import com.sejong.newsletterservice.domain.model.enums.MailCategoryName;
-import com.sejong.newsletterservice.domain.model.vo.SubscriberRequestVO;
+import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriberRequest;
+import com.sejong.newsletterservice.application.subscriber.dto.request.VerifyRequest;
+import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberResponse;
+import com.sejong.newsletterservice.core.enums.EmailFrequency;
+import com.sejong.newsletterservice.core.enums.MailCategoryName;
+import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -44,5 +45,19 @@ public class SubscriberRequestFixture {
                 List.of(), // 빈 카테고리
                 "123456"
         );
+    }
+
+    public static VerifyRequest verifyRequest() {
+        return new VerifyRequest(
+                "user@example.com",
+                "123456"
+        );
+    }
+
+    public static SubscriberResponse subscriberResponse() {
+        return SubscriberResponse.builder()
+                .email("user@example.com")
+                .message("구독이 정상적으로 완료되었습니다.")
+                .build();
     }
 }
