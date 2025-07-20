@@ -60,6 +60,9 @@ dependencies {
 
     //Eureka 서버
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    
+    // Actuator for health checks
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 dependencyManagement {

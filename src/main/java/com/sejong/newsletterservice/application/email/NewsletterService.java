@@ -26,5 +26,6 @@ public class NewsletterService {
                 .map(newsletterDomainService::sendNewsletterTo)
                 .filter(Optional::isPresent)
                 .count();
+
     }
 }

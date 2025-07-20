@@ -19,6 +19,11 @@ public class SubscriberController {
     private final SubscriberService subscriberService;
     private final VerificationService verificationService;
 
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
     @PostMapping("/subscribe/verification-code")
     public ResponseEntity<VerificationResponse> subscribeStart(
             @Valid @RequestBody SubscriberRequest subscriberRequest
@@ -41,7 +46,7 @@ public class SubscriberController {
                 .body(response);
     }
 
-    @GetMapping("/health-check")
+    @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
         return ResponseEntity.status(HttpStatus.OK).body("OK");
     }
