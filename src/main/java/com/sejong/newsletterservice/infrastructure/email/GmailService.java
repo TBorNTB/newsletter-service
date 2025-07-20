@@ -19,6 +19,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,9 @@ public class GmailService {
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final List<String> SCOPES = List.of(GmailScopes.GMAIL_SEND);
-    private static final String CREDENTIALS_FILE_PATH = "credentials.json";
+
+    @Value("${google.credentials.path}")
+    private static String CREDENTIALS_FILE_PATH;
 
     private Gmail gmail;
 

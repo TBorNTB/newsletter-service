@@ -67,7 +67,12 @@ jobs:
 
             docker pull 869508798906.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.REPOSITORY_NAME }}:latest
 
-            docker run -d --name ${{ secrets.IMAGE_NAME }} -P \
+            # credentials.json 생성 (여기 추가!)
+            echo '${{ secrets.GOOGLE_CREDENTIALS }}' > /home/ubuntu/credentials.json
+
+            docker run -d --name ${{ secrets.IMAGE_NAME }} -p 8080:8080 \
+              -v /home/ubuntu/credentials.json:/app/credentials.json \
+              -e GOOGLE_APPLICATION_CREDENTIALS="/app/credentials.json" \
               -e S3_SECRET_KEY="${{ secrets.S3_SECRET_KEY }}" \
               -e EC2_HOST="${{ secrets.EC2_HOST }}" \
               -e S3_BUCKET="${{ secrets.S3_BUCKET }}" \

@@ -52,4 +52,6 @@ logging:
     org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcessor: DEBUG
     com.sejong.newsletterservice.infrastructure.email: DEBUG
 
-
+google:
+  credentials:
+    path: ${GOOGLE_APPLICATION_CREDENTIALS:/credentials.json}
