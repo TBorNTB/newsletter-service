@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 @EnableRetry
-@EnableDiscoveryClient
 public class NewsLetterServiceApplication {
 
     public static void main(String[] args) {
