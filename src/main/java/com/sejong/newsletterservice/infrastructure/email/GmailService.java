@@ -39,7 +39,7 @@ public class GmailService {
     private static final List<String> SCOPES = List.of(GmailScopes.GMAIL_SEND);
 
     @Value("${google.credentials.path}")
-    private static String CREDENTIALS_FILE_PATH;
+    private String CREDENTIALS_FILE_PATH;
 
     private Gmail gmail;
 
