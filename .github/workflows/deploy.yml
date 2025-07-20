@@ -59,17 +59,21 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script_stop: true
           script: |
+            # ECR 로그인
             aws ecr get-login-password --region ap-northeast-2 | \
               docker login --username AWS --password-stdin 869508798906.dkr.ecr.ap-northeast-2.amazonaws.com
 
+            # 기존 컨테이너 정지 및 삭제
             docker stop ${{ secrets.IMAGE_NAME }} || true
             docker rm ${{ secrets.IMAGE_NAME }} || true
 
+            # 최신 이미지 Pull
             docker pull 869508798906.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.REPOSITORY_NAME }}:latest
 
-            # credentials.json 생성 (여기 추가!)
+            # ✅ credentials.json 파일 생성 (base64 인코딩된 경우에는 decode 필요)
             echo '${{ secrets.GOOGLE_CREDENTIALS }}' > /home/ubuntu/credentials.json
 
+            # 컨테이너 실행
             docker run -d --name ${{ secrets.IMAGE_NAME }} -p 8080:8080 \
               -v /home/ubuntu/credentials.json:/app/credentials.json \
               -e GOOGLE_APPLICATION_CREDENTIALS="/app/credentials.json" \
