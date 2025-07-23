@@ -54,6 +54,7 @@ spring:
       port: ${REDIS_PORT}
       timeout: 5000
 
+
   cloud:
     discovery:
       enabled: true
