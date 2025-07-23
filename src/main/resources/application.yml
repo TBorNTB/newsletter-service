@@ -54,15 +54,13 @@ spring:
       port: ${REDIS_PORT}
       timeout: 5000
 
-  eureka:
-    instance:
-      instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-      prefer-ip-address: true
-    client:
-      register-with-eureka: true
-      fetch-registry: true
-      service-url:
-        defaultZone: ${EUREKA_DEFAULTZONE}
+  cloud:
+    discovery:
+      enabled: true
+    loadbalancer:
+      ribbon:
+        enabled: false
+
 
 springdoc:
   api-docs:
@@ -75,22 +73,13 @@ springdoc:
     enabled: true
     path: /swagger-ui.html
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics
-      base-path: /actuator
-  endpoint:
-    health:
-      show-details: when-authorized
-      show-components: always
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_DEFAULTZONE}
+    register-with-eureka: true
+    fetch-registry: true
 
-
-logging:
-  level:
-    org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcessor: DEBUG
-    com.sejong.newsletterservice.infrastructure.email: DEBUG
 
 google:
   credentials:
