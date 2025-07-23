@@ -68,7 +68,7 @@ jobs:
             docker rm ${{ secrets.IMAGE_NAME }} || true
 
             # 최신 이미지 Pull
-            docker pull 869508798906.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.REPOSITORY_NAME }}:latest
+            docker pull 869508798906.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.REPOSITORY_NAME }}:${{ secrets.IMAGE_NAME }}
 
             # ✅ credentials.json 파일 생성 (base64 인코딩된 경우에는 decode 필요)
             echo '${{ secrets.GOOGLE_CREDENTIALS }}' > /home/ubuntu/credentials.json
@@ -92,4 +92,4 @@ jobs:
               -e MAIL_USERNAME="${{ secrets.MAIL_USERNAME }}" \
               -e MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}" \
               -e REDIS_PORT="${{ secrets.REDIS_PORT }}" \
-              869508798906.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.REPOSITORY_NAME }}:latest
+              869508798906.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.REPOSITORY_NAME }}:${{ secrets.IMAGE_NAME }}
