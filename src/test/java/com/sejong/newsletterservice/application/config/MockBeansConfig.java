@@ -10,6 +10,7 @@ import static org.mockito.Mockito.mock;
 @TestConfiguration
 public class MockBeansConfig {
 
+
     @Bean
     public NewsletterService newsletterService() {
         return mock(NewsletterService.class);
