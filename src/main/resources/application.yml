@@ -5,9 +5,6 @@ spring:
   application:
     name: newsletter-service
 
-  profiles:
-    active: default
-
   datasource:
     url: jdbc:mysql://mysql:3306/newsletter_schema?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -46,7 +43,12 @@ spring:
             enable: true
 
   thymeleaf:
-    enabled: false
+    enabled: true
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML
 
   data:
     redis:
@@ -55,6 +57,14 @@ spring:
       timeout: 5000
 
   cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 2000
+            readTimeout: 3000
+            loggerLevel: basic
+
     discovery:
       enabled: true
     loadbalancer:
@@ -95,12 +105,24 @@ google:
   credentials:
     path: ${GOOGLE_APPLICATION_CREDENTIALS:/app/credentials.json}
 
-  eureka:
-    instance:
-      instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-      prefer-ip-address: true
-    client:
-      register-with-eureka: true
-      fetch-registry: true
-      service-url:
-        defaultZone: ${EUREKA_DEFAULTZONE}
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_DEFAULTZONE}
+    register-with-eureka: true
+    fetch-registry: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      myFeignClient:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+
+  timelimiter:
+    instances:
+      myFeignClient:
+        timeoutDuration: 3s
