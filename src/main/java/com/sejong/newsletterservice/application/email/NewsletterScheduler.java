@@ -1,11 +1,13 @@
 package com.sejong.newsletterservice.application.email;
 
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
+import com.sejong.newsletterservice.core.enums.PostType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -45,5 +47,13 @@ public class NewsletterScheduler {
         sentLogFlusher.flushSuccessLogsToDatabase();
         log.info("로그 저장 완료");
         return "로그저장 완료";
+    }
+
+    @GetMapping("/visiters-post")
+    public String mostViewPost(
+
+    ) {
+        newsletterService.sendMostViewPost();
+        return "전송완료";
     }
 }
