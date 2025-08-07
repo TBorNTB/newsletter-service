@@ -20,4 +20,11 @@ public class JpaSubscriberRepository implements SubscriberRepository {
                 .map(SubscriberEntity::toDomain)
                 .toList();
     }
+
+    @Override
+    public List<Subscriber> findAll() {
+        return repository.findAll().stream()
+                .map(SubscriberEntity::toDomain)
+                .toList();
+    }
 }

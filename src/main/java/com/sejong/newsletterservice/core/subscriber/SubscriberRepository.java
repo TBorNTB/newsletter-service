@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SubscriberRepository {
     List<Subscriber> findByEmailFrequency(EmailFrequency frequency);
+
+    List<Subscriber> findAll();
 }
