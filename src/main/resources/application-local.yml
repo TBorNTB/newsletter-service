@@ -25,6 +25,14 @@ spring:
           default_batch_fetch_size: 100
         order_inserts: true
         order_updates: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connectTimeout: 2000
+            readTimeout: 3000
+            loggerLevel: basic
 
   mail:
     host: smtp.gmail.com
@@ -54,4 +62,30 @@ logging:
 
 google:
   credentials:
-    path: ${GOOGLE_APPLICATION_CREDENTIALS:/credentials.json}
+    path: ./credentials.json
+
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_DEFAULTZONE}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      myFeignClient:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+
+  timelimiter:
+    instances:
+      myFeignClient:
+        timeoutDuration: 3s
