@@ -1,16 +1,15 @@
 package com.sejong.newsletterservice.application.subscriber.dto.request;
 
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
-import com.sejong.newsletterservice.core.enums.MailCategoryName;
+import com.sejong.newsletterservice.core.enums.TechCategory;
 import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -25,7 +24,7 @@ public class SubscriberRequest {
     private EmailFrequency emailFrequency;
 
     @NotNull
-    private List<MailCategoryName> selectedCategories;
+    private List<TechCategory> selectedCategories;
 
     public SubscriberRequestVO toVO( String code) {
         return new SubscriberRequestVO(email, emailFrequency, selectedCategories,code);
