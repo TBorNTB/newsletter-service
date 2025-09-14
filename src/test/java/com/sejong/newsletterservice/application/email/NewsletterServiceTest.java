@@ -1,5 +1,6 @@
 package com.sejong.newsletterservice.application.email;
 
+import com.sejong.newsletterservice.application.internal.MetaExternalService;
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
 import com.sejong.newsletterservice.core.sentlog.SentLog;
 import com.sejong.newsletterservice.core.subscriber.Subscriber;
@@ -10,14 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,10 +27,14 @@ class NewsletterServiceTest {
     private  SubscriberRepository subscriberRepository;
     @Mock
     private  NewsletterDomainService newsletterDomainService;
+    @Mock
+    private NewsletterEmailSender newsletterEmailSender;
+    @Mock
+    private MetaExternalService metaExternalService;
 
     @BeforeEach
     void setUp() {
-        newsletterService = new NewsletterService(subscriberRepository, newsletterDomainService);
+        newsletterService = new NewsletterService(subscriberRepository, newsletterDomainService, newsletterEmailSender, metaExternalService);
     }
 
     @Test
