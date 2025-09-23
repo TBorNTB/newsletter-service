@@ -19,7 +19,7 @@ public class FakeMailCategoryRepository implements MailCategoryRepository {
             Long id = category.getId() != null ? category.getId() : sequence++;
             MailCategory saved = MailCategory.builder()
                     .id(id)
-                    .mailCategoryName(category.getMailCategoryName())
+                    .techCategory(category.getTechCategory())
                     .subscriberId(subscriber.getId())
                     .build();
 

@@ -1,6 +1,6 @@
 package com.sejong.newsletterservice.core.mailgategory;
 
-import com.sejong.newsletterservice.core.enums.MailCategoryName;
+import com.sejong.newsletterservice.core.enums.TechCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 public class MailCategory {
     private Long id;
     private Long subscriberId;
-    private MailCategoryName mailCategoryName;
+    private TechCategory techCategory;
 
-    public static MailCategory of(MailCategoryName mailCategoryName) {
+    public static MailCategory of(TechCategory mailCategoryName) {
         return MailCategory.builder()
-                .mailCategoryName(mailCategoryName)
+                .techCategory(mailCategoryName)
                 .build();
     }
 }

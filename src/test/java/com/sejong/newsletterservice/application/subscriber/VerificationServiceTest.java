@@ -1,25 +1,26 @@
 package com.sejong.newsletterservice.application.subscriber;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+
 import com.sejong.newsletterservice.application.email.VerificationEmailSender;
 import com.sejong.newsletterservice.application.subscriber.dto.response.VerificationResponse;
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
-import com.sejong.newsletterservice.core.enums.MailCategoryName;
+import com.sejong.newsletterservice.core.enums.TechCategory;
 import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import com.sejong.newsletterservice.fixture.SubscriberRequestFixture;
 import com.sejong.newsletterservice.infrastructure.redis.SubscriberCacheService;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 class VerificationServiceTest {
@@ -118,7 +119,7 @@ class VerificationServiceTest {
         SubscriberRequestVO storedVO = new SubscriberRequestVO(
                 email,
                 EmailFrequency.DAILY,
-                List.of(MailCategoryName.CRYPTOGRAPHY),
+                List.of(TechCategory.CRYPTOGRAPHY),
                 storeCode
         );
         when(subscriberCacheService.getEmailInfo(email)).thenReturn(Optional.of(storedVO));
