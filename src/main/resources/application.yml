@@ -6,7 +6,7 @@ spring:
     name: newsletter-service
 
   datasource:
-    url: jdbc:mysql://mysql2:3306/newsletter_schema?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://${EC2_HOST_INFRA}:3306/newsletter_schema?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
@@ -52,7 +52,7 @@ spring:
 
   data:
     redis:
-      host: ${EC2_HOST}
+      host: ${EC2_HOST_INFRA}
       port: ${REDIS_PORT}
       timeout: 5000
 

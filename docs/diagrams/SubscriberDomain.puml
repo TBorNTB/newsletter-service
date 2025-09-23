@@ -1,0 +1,137 @@
+@startuml SubscriberDomain
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam backgroundColor white
+skinparam classFontSize 10
+skinparam packageFontSize 12
+skinparam packageFontStyle bold
+direction TB
+
+package "Application Layer" {
+  class SubscriberController {
+    - subscriberService: SubscriberService
+    - verificationService: VerificationService
+    + POST /subscribers
+    + GET /subscribers/{id}
+    + PUT /subscribers/{id}
+    + DELETE /subscribers/{id}
+    + POST /subscribers/verify
+  }
+  
+  class SubscriberService {
+    - subscriberRepository: SubscriberRepository
+    - subscriberCacheService: SubscriberCacheService
+    + addSubscriber(SubscriberRequest)
+    + removeSubscriber(Long)
+    + updateSubscriber(Long, SubscriberRequest)
+    + getSubscribers()
+    + getSubscriberById(Long)
+  }
+  
+  class VerificationService {
+    - subscriberRepository: SubscriberRepository
+    + sendVerificationEmail(String)
+    + verifyEmail(String, String)
+    + resendVerification(String)
+  }
+}
+
+package "Infrastructure Layer" {
+  interface SubscriberRepository {
+    + save(Subscriber)
+    + findById(Long)
+    + findByEmail(String)
+    + delete(Subscriber)
+  }
+  
+  class JpaSubscriberRepository {
+    + save(Subscriber)
+    + findById(Long)
+    + findByEmail(String)
+    + delete(Subscriber)
+  }
+  
+  class SubscriberCacheService {
+    + cacheSubscriber(Subscriber)
+    + getCachedSubscriber(Long)
+    + clearCache()
+  }
+  
+  class SubscriberEntity {
+    - id: Long
+    - email: String
+    - name: String
+    - isVerified: Boolean
+    - emailFrequency: String
+    - createdAt: LocalDateTime
+    - updatedAt: LocalDateTime
+  }
+}
+
+package "Core Domain" {
+  class Subscriber {
+    - id: Long
+    - email: String
+    - name: String
+    - isVerified: Boolean
+    - emailFrequency: EmailFrequency
+    - subscribedAt: LocalDateTime
+    + subscribe()
+    + unsubscribe()
+    + verifyEmail()
+    + updatePreferences()
+  }
+  
+  class SubscriberRequest {
+    - email: String
+    - name: String
+    - emailFrequency: String
+  }
+  
+  class SubscriberResponse {
+    - id: Long
+    - email: String
+    - name: String
+    - isVerified: Boolean
+    - message: String
+  }
+  
+  class VerifyRequest {
+    - email: String
+    - verificationCode: String
+  }
+  
+  class VerificationResponse {
+    - success: Boolean
+    - message: String
+  }
+  
+  enum EmailFrequency {
+    DAILY
+    WEEKLY
+    MONTHLY
+  }
+}
+
+' Relationships
+SubscriberController --> SubscriberService
+SubscriberController --> VerificationService
+
+SubscriberService --> SubscriberRepository
+SubscriberService --> SubscriberCacheService
+VerificationService --> SubscriberRepository
+
+JpaSubscriberRepository ..|> SubscriberRepository
+
+SubscriberRepository --> SubscriberEntity
+SubscriberEntity --> Subscriber
+
+SubscriberService --> SubscriberRequest
+SubscriberService --> SubscriberResponse
+VerificationService --> VerifyRequest
+VerificationService --> VerificationResponse
+
+Subscriber --> EmailFrequency
+
+@enduml
