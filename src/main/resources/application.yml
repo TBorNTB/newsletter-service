@@ -5,6 +5,7 @@ spring:
   application:
     name: newsletter-service
 
+
   datasource:
     url: jdbc:mysql://${EC2_HOST_INFRA}:3306/newsletter_schema?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
