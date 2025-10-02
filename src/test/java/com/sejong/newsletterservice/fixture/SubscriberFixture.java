@@ -1,10 +1,9 @@
 package com.sejong.newsletterservice.fixture;
 
+import com.sejong.newsletterservice.core.enums.EmailFrequency;
+import com.sejong.newsletterservice.core.enums.TechCategory;
 import com.sejong.newsletterservice.core.mailgategory.MailCategory;
 import com.sejong.newsletterservice.core.subscriber.Subscriber;
-import com.sejong.newsletterservice.core.enums.EmailFrequency;
-import com.sejong.newsletterservice.core.enums.MailCategoryName;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,12 +22,12 @@ public class SubscriberFixture {
                 .mailCategories(List.of(
                         MailCategory.builder()
                                 .id(1L)
-                                .mailCategoryName(MailCategoryName.CRYPTOGRAPHY)
+                                .techCategory(TechCategory.CRYPTOGRAPHY)
                                 .subscriberId(1L)
                                 .build(),
                         MailCategory.builder()
                                 .id(2L)
-                                .mailCategoryName(MailCategoryName.DIGITAL_FORENSICS)
+                                .techCategory(TechCategory.DIGITAL_FORENSICS)
                                 .subscriberId(1L)
                                 .build()
                 ))
@@ -44,12 +43,12 @@ public class SubscriberFixture {
                 .mailCategories(List.of(
                         MailCategory.builder()
                                 .id(1L)
-                                .mailCategoryName(MailCategoryName.CRYPTOGRAPHY)
+                                .techCategory(TechCategory.CRYPTOGRAPHY)
                                 .subscriberId(1L)
                                 .build(),
                         MailCategory.builder()
                                 .id(2L)
-                                .mailCategoryName(MailCategoryName.DIGITAL_FORENSICS)
+                                .techCategory(TechCategory.DIGITAL_FORENSICS)
                                 .subscriberId(1L)
                                 .build()
                 ))

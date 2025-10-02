@@ -1,6 +1,6 @@
 package com.sejong.newsletterservice.core.enums;
 
-public enum MailCategoryName {
+public enum TechCategory {
     SYSTEM_HACKING,
     WEB_HACKING,
     DIGITAL_FORENSICS,
