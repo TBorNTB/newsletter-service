@@ -26,7 +26,10 @@ public class SubscriberRequest {
     @NotNull
     private List<TechCategory> selectedCategories;
 
+    @NotNull
+    private Boolean chasingPopularity;
+
     public SubscriberRequestVO toVO( String code) {
-        return new SubscriberRequestVO(email, emailFrequency, selectedCategories,code);
+        return new SubscriberRequestVO(email, emailFrequency, selectedCategories, chasingPopularity, code);
     }
 }
