@@ -13,5 +13,5 @@ public interface ElasticServiceClient {
     ContentResponse getWeeklyPopularContent();
 
     @GetMapping("/interest-contents") // 구독자의 관심 분야 기술 문서(프로젝트, cs 지식)
-    ContentResponse getInterestingContent(List<TechCategory> techCategories);
+    List<ContentResponse> getInterestingContent(List<TechCategory> techCategories);
 }

@@ -1,6 +1,7 @@
 package com.sejong.newsletterservice.core.subscriber;
 
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
+import com.sejong.newsletterservice.core.enums.TechCategory;
 import com.sejong.newsletterservice.core.mailgategory.MailCategory;
 import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import java.time.LocalDateTime;
@@ -37,5 +38,9 @@ public class Subscriber {
                 .emailFrequency(requestV0.emailFrequency())
                 .createdAt(createdAt)
                 .build();
+    }
+
+    public List<TechCategory> getSubscribedTechCategories() {
+        return mailCategories.stream().map(MailCategory::getTechCategory).toList();
     }
 }

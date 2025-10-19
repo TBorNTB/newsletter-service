@@ -46,12 +46,4 @@ public class NewsletterScheduler {
         log.info("로그 저장 완료");
         return "로그저장 완료";
     }
-
-    @GetMapping("/visiters-post")
-    public String mostViewPost(
-
-    ) {
-        newsletterService.sendMostViewPost();
-        return "전송완료";
-    }
 }

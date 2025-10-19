@@ -5,6 +5,7 @@ import com.sejong.newsletterservice.application.exception.EmailSendException;
 import com.sejong.newsletterservice.infrastructure.feign.response.MetaVisitersAllResponse;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,8 +14,6 @@ import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import java.io.UnsupportedEncodingException;
 
 
 @Service
@@ -35,7 +34,7 @@ public class EmailNewsletterService implements NewsletterEmailSender {
             maxAttempts = 3,
             backoff = @Backoff(delay = 2000, multiplier = 2)
     )
-    public void send(String to, String subject, Long csKnowledgeId) {
+    public void send(String to, String subject, String csKnowledgeId) {
         try {
             log.info("Sending email to " + to);
             MimeMessage message = mailSender.createMimeMessage();

@@ -1,15 +1,14 @@
 package com.sejong.newsletterservice.application.email;
 
+import com.sejong.newsletterservice.core.enums.PostType;
 import com.sejong.newsletterservice.infrastructure.email.EmailContentBuilder;
 import com.sejong.newsletterservice.infrastructure.feign.response.MetaVisitersAllResponse;
 import com.sejong.newsletterservice.infrastructure.feign.response.PopularPost;
-import com.sejong.newsletterservice.core.enums.PostType;
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Arrays;
 
 @RestController
 @RequestMapping("/test/email")
@@ -18,6 +17,7 @@ public class TestEmailController {
 
     private final EmailContentBuilder emailContentBuilder;
     private final NewsletterEmailSender newsletterEmailSender;
+    private final NewsletterService newsletterService;
 
     @GetMapping("/newsletter")
     public String testNewsletterTemplate() {
@@ -38,7 +38,7 @@ public class TestEmailController {
 
         PopularPost archivePost = PopularPost.builder()
                 .title("JPA 성능 최적화 팁")
-                .postType(PostType.ARCHIVE)
+                .postType(PostType.NEWS)
                 .postId("789")
                 .likeCount(234L)
                 .build();
@@ -77,7 +77,7 @@ public class TestEmailController {
 
             PopularPost archivePost = PopularPost.builder()
                     .title("JPA 성능 최적화 팁")
-                    .postType(PostType.ARCHIVE)
+                    .postType(PostType.NEWS)
                     .postId("789")
                     .likeCount(234L)
                     .build();
@@ -102,14 +102,6 @@ public class TestEmailController {
     @GetMapping("/send-favorite")
     public String testSendFavoritePost() {
         try {
-            // NewsletterService의 sendFavoritePost 메서드 테스트
-            NewsletterService newsletterService = new NewsletterService(
-                    null, // SubscriberRepository는 테스트에서 필요하지 않음
-                    null, // NewsletterDomainService는 테스트에서 필요하지 않음
-                    newsletterEmailSender,
-                    null  // MetaExternalService는 테스트에서 필요하지 않음
-            );
-
             // 테스트용 데이터 생성
             PopularPost newsPost = PopularPost.builder()
                     .title("Spring Boot 3.0 새로운 기능들")
@@ -127,7 +119,7 @@ public class TestEmailController {
 
             PopularPost archivePost = PopularPost.builder()
                     .title("JPA 성능 최적화 팁")
-                    .postType(PostType.ARCHIVE)
+                    .postType(PostType.NEWS)
                     .postId("789")
                     .likeCount(234L)
                     .build();
