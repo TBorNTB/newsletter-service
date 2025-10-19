@@ -20,7 +20,7 @@ public class NewsletterScheduler {
     @Scheduled(cron = "0 0 7 * * *", zone = "Asia/Seoul")
     public void sendDailyNewsletter() {
         log.info(" 매일 오전 7시 뉴스레터 전송 시작");
-        Long sentLogCount = newsletterService.sendNewsletters(EmailFrequency.DAILY);
+        Long sentLogCount = newsletterService.sendPopularContents(EmailFrequency.DAILY);
         log.info(" 뉴스레터 전송 완료 기록된 로그 수 : {}",sentLogCount);
     }
 
@@ -34,7 +34,7 @@ public class NewsletterScheduler {
     @GetMapping("/test-mail")
     public String testMail() {
         log.info(" 매일 오전 7시 뉴스레터 전송 시작");
-        newsletterService.sendNewsletters(EmailFrequency.DAILY);
+        newsletterService.sendPopularContents(EmailFrequency.DAILY);
         log.info(" 뉴스레터 전송 완료");
         return "메일 전송 완료";
     }

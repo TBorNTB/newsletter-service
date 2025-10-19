@@ -1,22 +1,23 @@
 package com.sejong.newsletterservice.application.email;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
 import com.sejong.newsletterservice.application.internal.MetaExternalService;
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
-import com.sejong.newsletterservice.core.sentlog.SentLog;
 import com.sejong.newsletterservice.core.subscriber.Subscriber;
 import com.sejong.newsletterservice.core.subscriber.SubscriberRepository;
 import com.sejong.newsletterservice.fixture.SubscriberFixture;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class NewsletterServiceTest {
@@ -51,7 +52,7 @@ class NewsletterServiceTest {
         when(newsletterDomainService.sendNewsletterTo(subscriber2))
                 .thenReturn(Optional.of(mockSentLog));
         // when
-        Long sentLogCount = newsletterService.sendNewsletters(EmailFrequency.DAILY);
+        Long sentLogCount = newsletterService.sendPopularContents(EmailFrequency.DAILY);
 
         // then
         assertThat(sentLogCount).isEqualTo(2L);

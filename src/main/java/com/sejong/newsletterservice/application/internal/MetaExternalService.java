@@ -3,8 +3,6 @@ package com.sejong.newsletterservice.application.internal;
 import com.sejong.newsletterservice.core.error.code.ErrorCode;
 import com.sejong.newsletterservice.core.error.exception.ApiException;
 import com.sejong.newsletterservice.infrastructure.feign.MetaClient;
-import com.sejong.newsletterservice.infrastructure.feign.response.ArchiveResponse;
-import com.sejong.newsletterservice.infrastructure.feign.response.MetaVisitersAllResponse;
 import com.sejong.newsletterservice.infrastructure.feign.response.MetaVisitersResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
@@ -74,25 +72,6 @@ public class MetaExternalService {
     private MetaVisitersResponse getMostVisitersProjectFallback(Throwable t) {
         log.info("fallback method is called.");
         if( t instanceof ApiException){
-            throw (ApiException) t;
-        }
-        throw new ApiException(ErrorCode.EXTERNAL_SERVER_ERROR, "잠시 서비스 이용이 불가합니다.");
-    }
-
-    @CircuitBreaker(name = "myFeignClient", fallbackMethod = "getMostVisitersFallback")
-    public MetaVisitersAllResponse getMostVisiters() {
-        ResponseEntity<MetaVisitersAllResponse> response = metaClient.mostVisitersAll();
-        log.info("response: {}", response.getBody());
-        if (response.getBody() == null) {
-            log.info("인기글 조회 실패");
-            throw new ApiException(ErrorCode.BAD_REQUEST, "인기글을 조회할 수 없습니다.");
-        }
-        return response.getBody();
-    }
-
-    private MetaVisitersAllResponse getMostVisitersFallback(Throwable t) {
-        log.info("fallback method is called.");
-        if (t instanceof ApiException) {
             throw (ApiException) t;
         }
         throw new ApiException(ErrorCode.EXTERNAL_SERVER_ERROR, "잠시 서비스 이용이 불가합니다.");
