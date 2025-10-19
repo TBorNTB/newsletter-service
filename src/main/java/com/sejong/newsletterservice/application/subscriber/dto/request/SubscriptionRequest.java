@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubscriberRequest {
+public class SubscriptionRequest {
 
     @Email
     @NotEmpty

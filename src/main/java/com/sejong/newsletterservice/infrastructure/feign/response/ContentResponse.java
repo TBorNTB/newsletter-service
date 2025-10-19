@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PopularContentResponse {
+public class ContentResponse {
     private String id;
     private String contentType; // PROJECT, NEWS, CS-KNOWLEDGE
 
