@@ -1,5 +1,5 @@
 package com.sejong.newsletterservice.core.enums;
 
 public enum EmailFrequency {
-    DAILY, WEEKLY
+    DAILY, WEEKLY, MONTHLY
 }
