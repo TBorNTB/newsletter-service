@@ -7,7 +7,7 @@ import com.sejong.newsletterservice.core.enums.EmailFrequency;
 import com.sejong.newsletterservice.core.enums.TechCategory;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-class SubscriberRequestVOTest {
+class SubscriptionRequestVOTest {
 
     @Test
     void 정상적으로_생성된다() {

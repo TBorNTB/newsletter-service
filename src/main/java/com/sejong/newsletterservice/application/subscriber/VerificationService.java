@@ -5,10 +5,7 @@ import com.sejong.newsletterservice.application.subscriber.dto.response.Verifica
 import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import com.sejong.newsletterservice.infrastructure.redis.SubscriberCacheService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -17,15 +14,10 @@ public class VerificationService {
     private final VerificationEmailSender verificationEmailSender;
     private final SubscriberCacheService subscriberCacheService;
 
-    public String generateCode() {
-        return String.format("%06d", new Random().nextInt(999999));
-    }
-
     public VerificationResponse sendVerification(SubscriberRequestVO subscriberRequestVO) {
-
         subscriberCacheService.save(subscriberRequestVO);
         String email = verificationEmailSender.send(subscriberRequestVO.email(), subscriberRequestVO.code());
-        return VerificationResponse.of(email,"이메일이 성공적으로 전송되었습니다.");
+        return VerificationResponse.of(email,"인증코드가 이메일로 전송되었습니다.");
     }
 
     public SubscriberRequestVO verifyEmailCode(String email, String inputCode) {

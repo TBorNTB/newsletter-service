@@ -1,6 +1,6 @@
 package com.sejong.newsletterservice.fixture;
 
-import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriberRequest;
+import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriptionRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.request.VerifyRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberResponse;
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
@@ -11,8 +11,8 @@ import java.util.List;
 
 public class SubscriberRequestFixture {
 
-    public static SubscriberRequest 기본_요청() {
-        return new SubscriberRequest(
+    public static SubscriptionRequest 기본_요청() {
+        return new SubscriptionRequest(
                 "user@example.com",
                 EmailFrequency.DAILY,
                 List.of(TechCategory.CRYPTOGRAPHY, TechCategory.DIGITAL_FORENSICS)

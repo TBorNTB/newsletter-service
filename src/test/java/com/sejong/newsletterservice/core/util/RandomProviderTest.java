@@ -1,11 +1,9 @@
-package com.sejong.newsletterservice.core.common;
-
-import org.junit.jupiter.api.Test;
-
-import java.util.Random;
+package com.sejong.newsletterservice.core.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Random;
+import org.junit.jupiter.api.Test;
 
 class RandomProviderTest {
     RandomProvider randomProvider = new RandomProvider();

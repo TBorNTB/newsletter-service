@@ -2,10 +2,10 @@ package com.sejong.newsletterservice.core.subscriber;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.sejong.newsletterservice.core.common.RandomProvider;
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
 import com.sejong.newsletterservice.core.enums.TechCategory;
 import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
+import com.sejong.newsletterservice.core.util.RandomProvider;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
