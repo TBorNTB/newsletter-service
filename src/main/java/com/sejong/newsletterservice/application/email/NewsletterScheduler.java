@@ -16,7 +16,7 @@ public class NewsletterScheduler {
 
     private final NewsletterService newsletterService;
 
-    @Scheduled(cron = "0 0 7 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "58 53 16 * * *", zone = "Asia/Seoul")
     public void sendDailyNewsletter() {
         log.info(" 매일 오전 7시 뉴스레터 전송 시작");
         Long sentLogCount = newsletterService.sendPopularContents(EmailFrequency.WEEKLY);

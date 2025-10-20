@@ -79,7 +79,7 @@ public class EmailNewsletterService implements NewsletterEmailSender {
             helper.setSubject(title);
 
             // 이메일 본문 HTML 생성
-            String html = emailContentBuilder.buildPostHtml(title, response, email);
+            String html = emailContentBuilder.buildPostHtml("🔎 주간 인기글 🔍", response, email);
             helper.setText(html, true);
 
             mailSender.send(message);
@@ -114,7 +114,7 @@ public class EmailNewsletterService implements NewsletterEmailSender {
             helper.setSubject(title);
 
             // 이메일 본문 HTML 생성
-            String html = emailContentBuilder.buildPostsHtml(title, responses, email);
+            String html = emailContentBuilder.buildPostsHtml("✨ 공부해볼까요? ✨", responses, email);
             helper.setText(html, true);
 
             mailSender.send(message);
