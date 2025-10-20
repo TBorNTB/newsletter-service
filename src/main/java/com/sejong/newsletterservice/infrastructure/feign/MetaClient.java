@@ -1,7 +1,6 @@
 package com.sejong.newsletterservice.infrastructure.feign;
 
 import com.sejong.newsletterservice.infrastructure.feign.response.MetaVisitersResponse;
-import com.sejong.newsletterservice.infrastructure.feign.response.MetaVisitersAllResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

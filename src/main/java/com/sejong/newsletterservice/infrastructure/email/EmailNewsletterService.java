@@ -2,7 +2,7 @@ package com.sejong.newsletterservice.infrastructure.email;
 
 import com.sejong.newsletterservice.application.email.NewsletterEmailSender;
 import com.sejong.newsletterservice.application.exception.EmailSendException;
-import com.sejong.newsletterservice.infrastructure.feign.response.MetaVisitersAllResponse;
+import com.sejong.newsletterservice.infrastructure.feign.response.ContentResponse;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
@@ -67,7 +67,7 @@ public class EmailNewsletterService implements NewsletterEmailSender {
             maxAttempts = 3,
             backoff = @Backoff(delay = 2000, multiplier = 2)
     )
-    public void sendMostVisiters(String email, String title, MetaVisitersAllResponse response) {
+    public void sendPopularContent(String email, String title, ContentResponse response) {
         try {
             log.info("Sending favorite post email to {}", email);
             MimeMessage message = mailSender.createMimeMessage();
@@ -78,7 +78,7 @@ public class EmailNewsletterService implements NewsletterEmailSender {
             helper.setSubject(title);
 
             // 이메일 본문 HTML 생성
-            String html = emailContentBuilder.buildMostVisitersPostHtml(title, response, email, true);
+            String html = emailContentBuilder.buildPostHtml(title, response, email, true);
             helper.setText(html, true);
 
             mailSender.send(message);
@@ -94,21 +94,5 @@ public class EmailNewsletterService implements NewsletterEmailSender {
             throw new EmailSendException("예상치 못한 오류로 인해 인기글 메일 전송 실패", e);
         }
     }
-
-
-//    @Override
-//    @Async
-//    public void send(String to, String subject) {
-//        try {
-//            log.info("Sending newsletter email to " + to);
-//            boolean hasKnowledge = !subject.startsWith("<*>");
-//            String html = emailContentBuilder.buildNewsletterHtml(subject, "http://empty.com", hasKnowledge);
-//            gmailService.sendHtmlEmail(to, subject, html);
-//            log.info("Email sent");
-//        } catch (Exception e) {
-//            log.error("뉴스레터 이메일 전송 실패", e);
-//            throw new RuntimeException("뉴스레터 이메일 전송 실패", e);
-//        }
-//    }
 }
 

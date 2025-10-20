@@ -1,10 +1,7 @@
 package com.sejong.newsletterservice.application.email;
 
-import com.sejong.newsletterservice.core.enums.PostType;
 import com.sejong.newsletterservice.infrastructure.email.EmailContentBuilder;
-import com.sejong.newsletterservice.infrastructure.feign.response.MetaVisitersAllResponse;
-import com.sejong.newsletterservice.infrastructure.feign.response.PopularPost;
-import java.util.Arrays;
+import com.sejong.newsletterservice.infrastructure.feign.response.ContentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,32 +19,15 @@ public class TestEmailController {
     @GetMapping("/newsletter")
     public String testNewsletterTemplate() {
         // 테스트용 데이터 생성
-        PopularPost newsPost = PopularPost.builder()
-                .title("Spring Boot 3.0 새로운 기능들")
-                .postType(PostType.NEWS)
-                .postId("123")
-                .likeCount(150L)
-                .build();
-
-        PopularPost projectPost = PopularPost.builder()
-                .title("마이크로서비스 아키텍처 구현하기")
-                .postType(PostType.PROJECT)
-                .postId("456")
-                .likeCount(89L)
-                .build();
-
-        PopularPost archivePost = PopularPost.builder()
+        ContentResponse response = ContentResponse.builder()
+                .id("12345")
                 .title("JPA 성능 최적화 팁")
-                .postType(PostType.NEWS)
-                .postId("789")
-                .likeCount(234L)
+                .category("NEWS")
+                .likeCount(234)
+                .viewCount(123)
                 .build();
 
-        MetaVisitersAllResponse response = MetaVisitersAllResponse.builder()
-                .popularPosts(Arrays.asList(newsPost, projectPost, archivePost))
-                .build();
-
-        String html = emailContentBuilder.buildMostVisitersPostHtml(
+        String html = emailContentBuilder.buildPostHtml(
                 "🔥 이번 주 인기글!",
                 response,
                 "test@example.com",
@@ -61,33 +41,16 @@ public class TestEmailController {
     public String testSendEmail() {
         try {
             // 테스트용 데이터 생성
-            PopularPost newsPost = PopularPost.builder()
-                    .title("Spring Boot 3.0 새로운 기능들")
-                    .postType(PostType.NEWS)
-                    .postId("123")
-                    .likeCount(150L)
-                    .build();
-
-            PopularPost projectPost = PopularPost.builder()
-                    .title("마이크로서비스 아키텍처 구현하기")
-                    .postType(PostType.PROJECT)
-                    .postId("456")
-                    .likeCount(89L)
-                    .build();
-
-            PopularPost archivePost = PopularPost.builder()
+            ContentResponse response = ContentResponse.builder()
+                    .id("12345")
                     .title("JPA 성능 최적화 팁")
-                    .postType(PostType.NEWS)
-                    .postId("789")
-                    .likeCount(234L)
-                    .build();
-
-            MetaVisitersAllResponse response = MetaVisitersAllResponse.builder()
-                    .popularPosts(Arrays.asList(newsPost, projectPost, archivePost))
+                    .category("NEWS")
+                    .likeCount(234)
+                    .viewCount(123)
                     .build();
 
             // 실제 이메일 전송 테스트
-            newsletterEmailSender.sendMostVisiters(
+            newsletterEmailSender.sendPopularContent(
                     "test@example.com", // 실제 테스트할 이메일 주소로 변경하세요
                     "🔥 이번 주 인기글!",
                     response
@@ -103,33 +66,16 @@ public class TestEmailController {
     public String testSendFavoritePost() {
         try {
             // 테스트용 데이터 생성
-            PopularPost newsPost = PopularPost.builder()
-                    .title("Spring Boot 3.0 새로운 기능들")
-                    .postType(PostType.NEWS)
-                    .postId("123")
-                    .likeCount(150L)
-                    .build();
-
-            PopularPost projectPost = PopularPost.builder()
-                    .title("마이크로서비스 아키텍처 구현하기")
-                    .postType(PostType.PROJECT)
-                    .postId("456")
-                    .likeCount(89L)
-                    .build();
-
-            PopularPost archivePost = PopularPost.builder()
+            ContentResponse response = ContentResponse.builder()
+                    .id("12345")
                     .title("JPA 성능 최적화 팁")
-                    .postType(PostType.NEWS)
-                    .postId("789")
-                    .likeCount(234L)
-                    .build();
-
-            MetaVisitersAllResponse response = MetaVisitersAllResponse.builder()
-                    .popularPosts(Arrays.asList(newsPost, projectPost, archivePost))
+                    .category("NEWS")
+                    .likeCount(234)
+                    .viewCount(123)
                     .build();
 
             // 실제 이메일 전송 테스트
-            newsletterEmailSender.sendMostVisiters(
+            newsletterEmailSender.sendPopularContent(
                     "test@example.com", // 실제 테스트할 이메일 주소로 변경하세요
                     "🔥 이번 주 인기글!",
                     response
