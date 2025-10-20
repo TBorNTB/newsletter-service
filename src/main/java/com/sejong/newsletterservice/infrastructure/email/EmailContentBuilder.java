@@ -30,11 +30,8 @@ public class EmailContentBuilder {
 
         context.setVariable("title", title);
         context.setVariable("link", baseUrl);
-
-        context.setVariable("title", title);
-        context.setVariable("link", baseUrl);
         context.setVariable("email", email);
-        context.setVariable("contents", response);
+        context.setVariable("content", response);  // 단일 컨텐츠
         context.setVariable("date", LocalDateTime.now());
 
         return templateEngine.process("email/newsletter", context);

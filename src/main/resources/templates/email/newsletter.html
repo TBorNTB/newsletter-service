@@ -45,30 +45,27 @@
                             안녕하세요, <span th:text="${email}" style="font-weight: 500; color: #2563eb;">구독자</span>님
                         </p>
 
-                        <!-- 컨텐츠가 있는 경우 -->
-                        <div th:if="${contents != null}">
-                            <!-- 단일 컨텐츠 -->
-                            <div th:if="${contents.getClass().getSimpleName() == 'ContentResponse'}">
-                                <div style="background-color: #f8fafc; border-left: 3px solid #2563eb; border-radius: 6px; padding: 20px; margin-bottom: 24px;">
-                                    <h3 th:text="${contents.title}" style="margin: 0 0 12px 0; font-size: 17px; font-weight: 600; color: #1e293b;">
-                                        컨텐츠 제목
-                                    </h3>
-                                    <p th:text="${contents.content}" style="margin: 0; font-size: 14px; color: #64748b; line-height: 1.6;">
-                                        컨텐츠 내용
-                                    </p>
-                                </div>
+                        <!-- 단일 컨텐츠 -->
+                        <div th:if="${content != null}">
+                            <div style="background-color: #f8fafc; border-left: 3px solid #2563eb; border-radius: 6px; padding: 20px; margin-bottom: 24px;">
+                                <h3 th:text="${content.title}" style="margin: 0 0 12px 0; font-size: 17px; font-weight: 600; color: #1e293b;">
+                                    컨텐츠 제목
+                                </h3>
+                                <p th:text="${content.content}" style="margin: 0; font-size: 14px; color: #64748b; line-height: 1.6;">
+                                    컨텐츠 내용
+                                </p>
                             </div>
+                        </div>
 
-                            <!-- 다중 컨텐츠 -->
-                            <div th:if="${contents.getClass().getSimpleName() == 'ArrayList'}">
-                                <div th:each="content : ${contents}" style="background-color: #f8fafc; border-left: 3px solid #2563eb; border-radius: 6px; padding: 20px; margin-bottom: 16px;">
-                                    <h3 th:text="${content.title}" style="margin: 0 0 12px 0; font-size: 17px; font-weight: 600; color: #1e293b;">
-                                        컨텐츠 제목
-                                    </h3>
-                                    <p th:text="${content.content}" style="margin: 0; font-size: 14px; color: #64748b; line-height: 1.6;">
-                                        컨텐츠 내용
-                                    </p>
-                                </div>
+                        <!-- 다중 컨텐츠 -->
+                        <div th:if="${contents != null}">
+                            <div th:each="item : ${contents}" style="background-color: #f8fafc; border-left: 3px solid #2563eb; border-radius: 6px; padding: 20px; margin-bottom: 16px;">
+                                <h3 th:text="${item.title}" style="margin: 0 0 12px 0; font-size: 17px; font-weight: 600; color: #1e293b;">
+                                    컨텐츠 제목
+                                </h3>
+                                <p th:text="${item.content}" style="margin: 0; font-size: 14px; color: #64748b; line-height: 1.6;">
+                                    컨텐츠 내용
+                                </p>
                             </div>
                         </div>
 
