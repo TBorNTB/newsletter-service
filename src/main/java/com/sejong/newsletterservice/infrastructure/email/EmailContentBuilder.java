@@ -23,7 +23,7 @@ public class EmailContentBuilder {
         return templateEngine.process("email/newsletter", context);
     }
 
-    public String buildPostHtml(String title, ContentResponse response, String email, boolean hasKnowledge) {
+    public String buildPostHtml(String title, ContentResponse response, String email) {
         Context context = new Context();
 
         String baseUrl = "https://your-domain/";
@@ -31,20 +31,16 @@ public class EmailContentBuilder {
         context.setVariable("title", title);
         context.setVariable("link", baseUrl);
 
-        // PostType
-        context.setVariable("type", response.getContentType());
-
-        // 각 PostType별 링크와 카운트 설정 (템플릿에서 사용할 수 있도록)
-//        context.setVariable("hasKnowledge", hasKnowledge); // ?
+        context.setVariable("title", title);
+        context.setVariable("link", baseUrl);
         context.setVariable("email", email);
-        context.setVariable("title", response.getTitle());
-        context.setVariable("content", response.getContent());
+        context.setVariable("contents", response);
         context.setVariable("date", LocalDateTime.now());
 
         return templateEngine.process("email/newsletter", context);
     }
 
-    public String buildPostsHtml(String title, List<ContentResponse> responses, String email, boolean hasKnowledge) {
+    public String buildPostsHtml(String title, List<ContentResponse> responses, String email) {
         Context context = new Context();
 
         String baseUrl = "https://your-domain/";
@@ -52,7 +48,6 @@ public class EmailContentBuilder {
         context.setVariable("title", title);
         context.setVariable("link", baseUrl);
         context.setVariable("email", email);
-        context.setVariable("hasKnowledge", hasKnowledge);
         context.setVariable("contents", responses);
         context.setVariable("date", LocalDateTime.now());
 

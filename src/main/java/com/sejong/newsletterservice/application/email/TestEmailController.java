@@ -30,8 +30,7 @@ public class TestEmailController {
         String html = emailContentBuilder.buildPostHtml(
                 "🔥 이번 주 인기글!",
                 response,
-                "test@example.com",
-                true
+                "test@example.com"
         );
 
         return html;

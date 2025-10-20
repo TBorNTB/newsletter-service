@@ -42,7 +42,7 @@ public class EmailNewsletterService implements NewsletterEmailSender {
             MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 
             helper.setTo(to);
-            helper.setFrom("kkd06155@gmail.com", "뉴스레터");
+            helper.setFrom("ssg.no-reply.com", "뉴스레터");
             helper.setSubject(subject);
             boolean hasKnowledge = !subject.startsWith("<*>");
             helper.setText(emailContentBuilder.buildNewsletterHtml(subject, "http://empty.com", "kkd06144@naver.com",hasKnowledge), true);
@@ -75,11 +75,11 @@ public class EmailNewsletterService implements NewsletterEmailSender {
             MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 
             helper.setTo(email);
-            helper.setFrom("kkd06155@gmail.com", "뉴스레터");
+            helper.setFrom("ssg.no-reply.com", "뉴스레터");
             helper.setSubject(title);
 
             // 이메일 본문 HTML 생성
-            String html = emailContentBuilder.buildPostHtml(title, response, email, true);
+            String html = emailContentBuilder.buildPostHtml(title, response, email);
             helper.setText(html, true);
 
             mailSender.send(message);
@@ -110,11 +110,11 @@ public class EmailNewsletterService implements NewsletterEmailSender {
             MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 
             helper.setTo(email);
-            helper.setFrom("kkd06155@gmail.com", "뉴스레터");
+            helper.setFrom("ssg.no-reply.com", "뉴스레터");
             helper.setSubject(title);
 
             // 이메일 본문 HTML 생성
-            String html = emailContentBuilder.buildPostsHtml(title, responses, email, true);
+            String html = emailContentBuilder.buildPostsHtml(title, responses, email);
             helper.setText(html, true);
 
             mailSender.send(message);
