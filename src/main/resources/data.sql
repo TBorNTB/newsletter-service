@@ -1,7 +1,7 @@
 --  subscriber
 INSERT IGNORE INTO subscriber (created_at, email, email_frequency)
 VALUES
-  ('2025-01-15 09:00:00', 'drsoombre@naver.com', 'DAILY'),
+  ('2025-01-15 09:00:00', 'drsoombre@naver.com', 'WEEKLY'),
   ('2025-01-16 10:30:00', 'kkd06144@naver.com', 'WEEKLY'),
   ('2025-01-17 14:20:00', 'user3@sju.ac.kr', 'DAILY'),
   ('2025-01-18 16:45:00', 'user4@naver.com', 'WEEKLY'),
