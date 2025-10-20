@@ -16,14 +16,14 @@ public class NewsletterScheduler {
 
     private final NewsletterService newsletterService;
 
-    @Scheduled(cron = "58 53 16 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 15 * * FRI", zone = "Asia/Seoul")
     public void sendDailyNewsletter() {
         log.info(" 매일 오전 7시 뉴스레터 전송 시작");
         Long sentLogCount = newsletterService.sendPopularContents(EmailFrequency.WEEKLY);
         log.info(" 뉴스레터 전송 완료 기록된 로그 수 : {}",sentLogCount);
     }
 
-    @Scheduled(cron = "0 1 5 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 11 * * FRI", zone = "Asia/Seoul")
     public void sendWeeklyNewsletter() {
         log.info(" 매일 오후 3시 뉴스레터 전송 시작");
         Long sentLogCount = newsletterService.sendInterestingContents(EmailFrequency.WEEKLY);
