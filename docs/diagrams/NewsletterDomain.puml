@@ -1,0 +1,120 @@
+@startuml NewsletterDomain
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam backgroundColor white
+skinparam classFontSize 10
+skinparam packageFontSize 12
+skinparam packageFontStyle bold
+direction TB
+
+package "Application Layer" {
+  class NewsletterController {
+    - newsletterService: NewsletterService
+    + POST /newsletters
+    + GET /newsletters/{id}
+    + PUT /newsletters/{id}
+    + DELETE /newsletters/{id}
+    + GET /newsletters/send
+  }
+  
+  class NewsletterService {
+    - newsletterRepository: NewsletterRepository
+    - emailService: EmailService
+    + createNewsletter()
+    + updateNewsletter()
+    + deleteNewsletter()
+    + sendNewsletter()
+    + scheduleNewsletter()
+  }
+  
+  class NewsletterScheduler {
+    + scheduleNewsletter()
+    + cancelNewsletter()
+    + processScheduledNewsletters()
+  }
+}
+
+package "Infrastructure Layer" {
+  class NewsletterRepository {
+    + save(Newsletter)
+    + findById(Long)
+    + findAll()
+    + delete(Newsletter)
+  }
+  
+  class EmailService {
+    + sendEmail(String, String, String)
+    + sendBulkEmail(List<String>, String)
+    + validateEmail(String)
+  }
+  
+  class NewsletterEntity {
+    - id: Long
+    - title: String
+    - content: String
+    - status: String
+    - scheduledAt: LocalDateTime
+    - createdAt: LocalDateTime
+    - updatedAt: LocalDateTime
+  }
+}
+
+package "Core Domain" {
+  class Newsletter {
+    - id: Long
+    - title: String
+    - content: String
+    - status: NewsletterStatus
+    - scheduledAt: LocalDateTime
+    - subscribers: List<Subscriber>
+    - categories: List<Category>
+    + createNewsletter()
+    + updateNewsletter()
+    + deleteNewsletter()
+    + scheduleNewsletter()
+    + sendNewsletter()
+  }
+  
+  class Subscriber {
+    - id: Long
+    - email: String
+    - name: String
+    - isActive: Boolean
+    - subscribedAt: LocalDateTime
+    + subscribe()
+    + unsubscribe()
+    + updatePreferences()
+  }
+  
+  class Category {
+    - id: Long
+    - name: String
+    - description: String
+    + addSubscriber()
+    + removeSubscriber()
+  }
+  
+  enum NewsletterStatus {
+    DRAFT
+    SCHEDULED
+    SENDING
+    SENT
+    FAILED
+  }
+}
+
+' Relationships
+NewsletterController --> NewsletterService
+NewsletterService --> NewsletterRepository
+NewsletterService --> EmailService
+NewsletterService --> NewsletterScheduler
+
+NewsletterRepository --> NewsletterEntity
+NewsletterEntity --> Newsletter
+
+Newsletter --> Subscriber
+Newsletter --> Category
+Newsletter --> NewsletterStatus
+
+@enduml

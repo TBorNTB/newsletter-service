@@ -1,0 +1,202 @@
+@startuml DetailedClassDiagram
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam backgroundColor white
+skinparam classFontSize 9
+skinparam packageFontSize 12
+skinparam packageFontStyle bold
+skinparam linetype ortho
+direction TB
+
+package "Application Layer" {
+  class NewsletterService {
+    + sendNewsletter()
+    + scheduleNewsletter()
+    + processNewsletter()
+  }
+  
+  class NewsletterScheduler {
+    + scheduleNewsletter()
+    + cancelNewsletter()
+  }
+  
+  class SubscriberService {
+    + addSubscriber()
+    + removeSubscriber()
+    + updateSubscriber()
+    + getSubscribers()
+  }
+  
+  class VerificationService {
+    + sendVerificationEmail()
+    + verifyEmail()
+    + resendVerification()
+  }
+  
+  class NewsletterDomainService {
+    + createNewsletterContent()
+    + validateNewsletter()
+    + processNewsletterData()
+  }
+  
+  class NewsletterEmailSender {
+    + sendNewsletterEmail()
+    + sendVerificationEmail()
+    + handleEmailFailure()
+  }
+}
+
+package "Core Layer" {
+  class Subscriber {
+    + email: String
+    + isVerified: Boolean
+    + emailFrequency: EmailFrequency
+    + createdAt: LocalDateTime
+    + updatedAt: LocalDateTime
+  }
+  
+  class MailCategory {
+    + name: String
+    + description: String
+    + isActive: Boolean
+  }
+  
+  class SentLog {
+    + subscriberId: Long
+    + mailCategoryId: Long
+    + sentAt: LocalDateTime
+    + status: String
+  }
+  
+  class CsKnowledge {
+    + title: String
+    + content: String
+    + category: String
+    + createdAt: LocalDateTime
+  }
+  
+  enum EmailFrequency {
+    DAILY
+    WEEKLY
+    MONTHLY
+  }
+  
+  enum PostType {
+    BLOG
+    NEWS
+    TUTORIAL
+  }
+}
+
+package "Infrastructure Layer" {
+  interface SubscriberRepository {
+    + save()
+    + findById()
+    + findByEmail()
+    + delete()
+  }
+  
+  class JpaSubscriberRepository {
+    + save()
+    + findById()
+    + findByEmail()
+    + delete()
+  }
+  
+  interface MailCategoryRepository {
+    + findAll()
+    + findById()
+    + save()
+  }
+  
+  class JpaMailCategoryRepository {
+    + findAll()
+    + findById()
+    + save()
+  }
+  
+  class GmailService {
+    + sendEmail()
+    + createDraft()
+    + getLabels()
+  }
+  
+  class EmailContentBuilder {
+    + buildNewsletterContent()
+    + buildVerificationContent()
+    + applyTemplate()
+  }
+  
+  class SentLogCacheService {
+    + cacheSentLog()
+    + getCachedSentLog()
+    + clearCache()
+  }
+  
+  class SubscriberCacheService {
+    + cacheSubscriber()
+    + getCachedSubscriber()
+    + clearCache()
+  }
+}
+
+package "External Services" {
+  interface ArchiveClient {
+    + getArchiveData()
+    + getPopularPosts()
+  }
+  
+  interface MetaClient {
+    + getVisitorStats()
+    + getPageViews()
+  }
+  
+  interface ProjectClient {
+    + getProjectData()
+    + getProjectList()
+  }
+  
+  interface UserClient {
+    + getUserInfo()
+    + getUserPreferences()
+  }
+}
+
+' Application Layer relationships
+NewsletterService --> NewsletterScheduler
+NewsletterService --> NewsletterDomainService
+NewsletterService --> NewsletterEmailSender
+NewsletterService --> SubscriberService
+SubscriberService --> VerificationService
+
+' Core Layer relationships
+SubscriberService --> Subscriber
+SubscriberService --> MailCategory
+NewsletterService --> SentLog
+NewsletterService --> CsKnowledge
+Subscriber --> EmailFrequency
+NewsletterService --> PostType
+
+' Infrastructure Layer relationships
+SubscriberService --> SubscriberRepository
+SubscriberService --> JpaSubscriberRepository
+SubscriberService --> SubscriberCacheService
+NewsletterService --> MailCategoryRepository
+NewsletterService --> JpaMailCategoryRepository
+NewsletterService --> SentLogCacheService
+NewsletterEmailSender --> GmailService
+NewsletterEmailSender --> EmailContentBuilder
+
+' External Services relationships
+NewsletterDomainService --> ArchiveClient
+NewsletterDomainService --> MetaClient
+NewsletterDomainService --> ProjectClient
+NewsletterDomainService --> UserClient
+
+' Implementation relationships
+JpaSubscriberRepository ..|> SubscriberRepository
+JpaMailCategoryRepository ..|> MailCategoryRepository
+
+@enduml
+
