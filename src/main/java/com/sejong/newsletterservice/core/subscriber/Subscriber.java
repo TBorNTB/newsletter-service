@@ -35,6 +35,7 @@ public class Subscriber {
     public static Subscriber from(SubscriberRequestVO requestV0, LocalDateTime createdAt) {
         return Subscriber.builder()
                 .email(requestV0.email())
+                // 왜 category가 없지? 흠..
                 .emailFrequency(requestV0.emailFrequency())
                 .createdAt(createdAt)
                 .build();

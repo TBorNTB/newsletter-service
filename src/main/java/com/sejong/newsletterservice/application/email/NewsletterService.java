@@ -25,7 +25,7 @@ public class NewsletterService {
     public Long sendPopularContents(EmailFrequency frequency) {
         ContentResponse content = elasticServiceClient.getWeeklyPopularContent();
         List<Subscriber> subscribers = subscriberRepository.findByEmailFrequency(frequency);
-        subscribers.forEach(s -> send(s, content));
+        subscribers.forEach(s -> sendPopular(s, content));
         return (long)subscribers.size();
     }
 
@@ -35,13 +35,17 @@ public class NewsletterService {
         subscribers.forEach(s -> {
             List<TechCategory> techCategories = s.getSubscribedTechCategories();
             List<ContentResponse> contents = elasticServiceClient.getInterestingContent(techCategories);
-
+            sendInteresting(s, contents);
         });
         return (long)subscribers.size();
     }
 
 
-    private void send(Subscriber subscriber, ContentResponse content) {
-        newsletterEmailSender.send(subscriber.getEmail(), content.getTitle(), content.getId());
+    private void sendPopular(Subscriber subscriber, ContentResponse content) {
+        newsletterEmailSender.sendPopularContent(subscriber.getEmail(), "주간 인기글", content);
+    }
+
+    private void sendInteresting(Subscriber subscriber, List<ContentResponse> contents) {
+        newsletterEmailSender.sendInterestingCategoryContents(subscriber.getEmail(), "구독한 카테고리 글", contents);
     }
 }
