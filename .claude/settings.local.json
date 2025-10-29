@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/sumi/IdeaProjects/TBorNTB/elastic-service/**)",
+      "Read(//Users/sumi/IdeaProjects/TBorNTB/project-service/**)",
+      "Read(//Users/sumi/IdeaProjects/TBorNTB/archive-service/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

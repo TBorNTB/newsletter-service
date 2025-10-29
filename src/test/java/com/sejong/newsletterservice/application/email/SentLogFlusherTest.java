@@ -1,22 +1,20 @@
 package com.sejong.newsletterservice.application.email;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.sejong.newsletterservice.core.sentlog.SentLog;
 import com.sejong.newsletterservice.core.sentlog.SentLogRepository;
 import com.sejong.newsletterservice.fixture.SentLogFixture;
-import com.sejong.newsletterservice.infrastructure.redis.SentLogCacheService;
 import com.sejong.newsletterservice.infrastructure.redis.dto.SentLogCacheDto;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 class SentLogFlusherTest {

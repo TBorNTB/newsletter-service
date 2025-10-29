@@ -22,6 +22,7 @@ public class Subscriber {
     private EmailFrequency emailFrequency;
     private Boolean chasingPopularity;
     private LocalDateTime createdAt;
+    @Builder.Default
     private List<MailCategory> mailCategories = new ArrayList<>();
 
     public static Subscriber of(String email, EmailFrequency emailFrequency, LocalDateTime createdAt) {

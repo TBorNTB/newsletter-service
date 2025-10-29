@@ -38,6 +38,7 @@ public class SubscriberEntity {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "subscriber", orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
     private List<MailCategoryEntity> mailCategories = new ArrayList<>();
 
     public static SubscriberEntity from(Subscriber subscriber) {
