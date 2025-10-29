@@ -1,12 +1,12 @@
 package com.sejong.newsletterservice.infrastructure.email;
 
-import com.sejong.newsletterservice.infrastructure.feign.response.MetaVisitersAllResponse;
+import com.sejong.newsletterservice.infrastructure.feign.response.ContentResponse;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
-import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -23,7 +23,7 @@ public class EmailContentBuilder {
         return templateEngine.process("email/newsletter", context);
     }
 
-    public String buildMostVisitersPostHtml(String title, MetaVisitersAllResponse response, String email, boolean hasKnowledge) {
+    public String buildPostHtml(String title, ContentResponse response, String email) {
         Context context = new Context();
 
         String baseUrl = "https://your-domain/";
@@ -31,20 +31,28 @@ public class EmailContentBuilder {
         context.setVariable("title", title);
         context.setVariable("link", baseUrl);
 
-        // 각 PostType별 인기글 정보 설정
-        context.setVariable("newsPost", response.getNewsPost());
-        context.setVariable("projectPost", response.getProjectPost());
-        context.setVariable("archivePost", response.getArchivePost());
-
-        // 각 PostType별 링크와 카운트 설정 (템플릿에서 사용할 수 있도록)
-        context.setVariable("hasKnowledge", hasKnowledge);
+        context.setVariable("title", title);
+        context.setVariable("link", baseUrl);
         context.setVariable("email", email);
+        context.setVariable("contents", response);
         context.setVariable("date", LocalDateTime.now());
 
         return templateEngine.process("email/newsletter", context);
     }
 
+    public String buildPostsHtml(String title, List<ContentResponse> responses, String email) {
+        Context context = new Context();
 
+        String baseUrl = "https://your-domain/";
+
+        context.setVariable("title", title);
+        context.setVariable("link", baseUrl);
+        context.setVariable("email", email);
+        context.setVariable("contents", responses);
+        context.setVariable("date", LocalDateTime.now());
+
+        return templateEngine.process("email/newsletter", context);
+    }
 
     public String buildVerificationHtml(String code) {
         Context context = new Context();

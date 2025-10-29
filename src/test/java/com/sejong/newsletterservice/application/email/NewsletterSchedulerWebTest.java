@@ -1,19 +1,18 @@
 package com.sejong.newsletterservice.application.email;
 
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.sejong.newsletterservice.application.config.MockBeansConfig;
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
-import com.sejong.newsletterservice.core.sentlog.SentLog;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(NewsletterScheduler.class)  // 웹 계층 슬라이스 테스트
 @AutoConfigureMockMvc
@@ -35,7 +34,7 @@ class NewsletterSchedulerWebTest {
         // then
         result.andExpect(status().isOk())
                 .andExpect(content().string("메일 전송 완료"));
-        verify(newsletterService).sendNewsletters(EmailFrequency.DAILY);
+        verify(newsletterService).sendPopularContents(EmailFrequency.DAILY);
     }
 
     @Test

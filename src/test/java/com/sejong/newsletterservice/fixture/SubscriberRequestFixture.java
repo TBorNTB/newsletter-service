@@ -1,22 +1,21 @@
 package com.sejong.newsletterservice.fixture;
 
-import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriberRequest;
+import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriptionRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.request.VerifyRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberResponse;
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
-import com.sejong.newsletterservice.core.enums.MailCategoryName;
+import com.sejong.newsletterservice.core.enums.TechCategory;
 import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
-
 import java.util.List;
 
 
 public class SubscriberRequestFixture {
 
-    public static SubscriberRequest 기본_요청() {
-        return new SubscriberRequest(
+    public static SubscriptionRequest 기본_요청() {
+        return new SubscriptionRequest(
                 "user@example.com",
                 EmailFrequency.DAILY,
-                List.of(MailCategoryName.CRYPTOGRAPHY, MailCategoryName.DIGITAL_FORENSICS)
+                List.of(TechCategory.CRYPTOGRAPHY, TechCategory.DIGITAL_FORENSICS)
         );
     }
 
@@ -24,7 +23,7 @@ public class SubscriberRequestFixture {
         return new SubscriberRequestVO(
                 "user@example.com",
                 EmailFrequency.DAILY,
-                List.of(MailCategoryName.CRYPTOGRAPHY, MailCategoryName.DIGITAL_FORENSICS),
+                List.of(TechCategory.CRYPTOGRAPHY, TechCategory.DIGITAL_FORENSICS),
                 "123456"
         );
     }
@@ -33,7 +32,7 @@ public class SubscriberRequestFixture {
         return new SubscriberRequestVO(
                 "", // 잘못된 이메일
                 EmailFrequency.WEEKLY,
-                List.of(MailCategoryName.CRYPTOGRAPHY),
+                List.of(TechCategory.CRYPTOGRAPHY),
                 "123456"
         );
     }

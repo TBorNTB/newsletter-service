@@ -1,17 +1,14 @@
 package com.sejong.newsletterservice.application.email;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.scheduling.annotation.Scheduled;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class NewsletterSchedulerTest {
@@ -32,7 +29,7 @@ class NewsletterSchedulerTest {
         scheduler.sendDailyNewsletter();
 
         // then
-        verify(newsletterService).sendNewsletters(EmailFrequency.DAILY);
+        verify(newsletterService).sendPopularContents(EmailFrequency.DAILY);
     }
 
     @Test
@@ -51,7 +48,7 @@ class NewsletterSchedulerTest {
 
         // then
         assertThat(result).isEqualTo("메일 전송 완료");
-        verify(newsletterService).sendNewsletters(EmailFrequency.DAILY);
+        verify(newsletterService).sendPopularContents(EmailFrequency.DAILY);
     }
 
     @Test

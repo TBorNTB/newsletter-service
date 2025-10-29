@@ -1,12 +1,11 @@
 package com.sejong.newsletterservice.infrastructure.subscriber;
 
-import com.sejong.newsletterservice.core.subscriber.Subscriber;
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
+import com.sejong.newsletterservice.core.subscriber.Subscriber;
 import com.sejong.newsletterservice.core.subscriber.SubscriberRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,7 +15,7 @@ public class JpaSubscriberRepository implements SubscriberRepository {
 
     @Override
     public List<Subscriber> findByEmailFrequency(EmailFrequency frequency) {
-        return repository.findByEmailFrequencyWithCategories(frequency).stream()
+        return repository.findByEmailFrequency(frequency).stream()
                 .map(SubscriberEntity::toDomain)
                 .toList();
     }

@@ -2,8 +2,7 @@ package com.sejong.newsletterservice.core.subscriber.vo;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
-import com.sejong.newsletterservice.core.enums.MailCategoryName;
-
+import com.sejong.newsletterservice.core.enums.TechCategory;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,7 +14,8 @@ import java.util.List;
 public record SubscriberRequestVO(
         String email,
         EmailFrequency emailFrequency,
-        List<MailCategoryName> selectedCategories,
+        List<TechCategory> selectedCategories,
+        Boolean chasingPopularity,
         String code
 ) implements Serializable {
     public SubscriberRequestVO {

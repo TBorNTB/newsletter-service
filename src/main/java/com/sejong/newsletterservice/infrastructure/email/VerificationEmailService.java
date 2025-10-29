@@ -4,6 +4,7 @@ import com.sejong.newsletterservice.application.email.VerificationEmailSender;
 import com.sejong.newsletterservice.application.exception.EmailSendException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,16 +14,12 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-
 @Service("verificationSender")
 @Slf4j
 @RequiredArgsConstructor
 public class VerificationEmailService implements VerificationEmailSender {
-    //GmailService 확장으로 인해 주석처리
-    private final JavaMailSender mailSender;
 
-    //private final GmailService gmailService;
+    private final JavaMailSender mailSender;
     private final EmailContentBuilder emailContentBuilder;
 
     @Override

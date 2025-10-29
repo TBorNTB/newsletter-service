@@ -1,14 +1,16 @@
 package com.sejong.newsletterservice.application.subscriber;
 
-import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriberRequest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriptionRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.request.VerifyRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberResponse;
 import com.sejong.newsletterservice.application.subscriber.dto.response.VerificationResponse;
 import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import com.sejong.newsletterservice.fixture.SubscriberRequestFixture;
-import jakarta.validation.Valid;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,13 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -39,16 +34,16 @@ class SubscriberControllerTest {
     @Test
     void 구독_요청시_인증메일을_전송한다() {
         // given
-        SubscriberRequest subscriberRequest = SubscriberRequestFixture.기본_요청();
+        SubscriptionRequest subscriptionRequest = SubscriberRequestFixture.기본_요청();
         String fakeCode = "123456";
-        SubscriberRequestVO requestVO = subscriberRequest.toVO(fakeCode);
+        SubscriberRequestVO requestVO = subscriptionRequest.toVO(fakeCode);
         VerificationResponse verificationResponse = new VerificationResponse("test@email.com","이메일이 성공적으로 전송되었습니다.");
 
         when(verificationService.generateCode()).thenReturn(fakeCode);
         when(verificationService.sendVerification(requestVO)).thenReturn(verificationResponse);
 
         // when
-        ResponseEntity<VerificationResponse> response = subscriberController.subscribeStart(subscriberRequest);
+        ResponseEntity<VerificationResponse> response = subscriberController.subscribeStart(subscriptionRequest);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

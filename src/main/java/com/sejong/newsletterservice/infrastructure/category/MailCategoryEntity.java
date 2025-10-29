@@ -1,9 +1,20 @@
 package com.sejong.newsletterservice.infrastructure.category;
 
+import com.sejong.newsletterservice.core.enums.TechCategory;
 import com.sejong.newsletterservice.core.mailgategory.MailCategory;
-import com.sejong.newsletterservice.core.enums.MailCategoryName;
 import com.sejong.newsletterservice.infrastructure.subscriber.SubscriberEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,14 +38,14 @@ public class MailCategoryEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "categoryName",columnDefinition = "VARCHAR(50)", nullable = false)
-    private MailCategoryName mailCategoryName;
+    private TechCategory techCategory;
 
-    public MailCategoryEntity(MailCategoryName mailCategoryName) {
-        this.mailCategoryName = mailCategoryName;
+    public MailCategoryEntity(TechCategory techCategory) {
+        this.techCategory = techCategory;
     }
 
     public static MailCategoryEntity from(MailCategory mailCategory, SubscriberEntity subscriber) {
-        MailCategoryEntity mailCategoryEntity = new MailCategoryEntity(mailCategory.getMailCategoryName());
+        MailCategoryEntity mailCategoryEntity = new MailCategoryEntity(mailCategory.getTechCategory());
 
         mailCategoryEntity.assignSubscriber(subscriber);
         return mailCategoryEntity;
@@ -44,7 +55,7 @@ public class MailCategoryEntity {
         return MailCategory.builder()
                 .id(id)
                 .subscriberId(subscriber.getId())
-                .mailCategoryName(mailCategoryName)
+                .techCategory(techCategory)
                 .build();
     }
 
