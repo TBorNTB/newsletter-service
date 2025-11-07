@@ -73,9 +73,6 @@ jobs:
             # 최신 이미지 Pull
             docker pull 869508798906.dkr.ecr.ap-northeast-2.amazonaws.com/${{ secrets.REPOSITORY_NAME }}:${{ secrets.IMAGE_NAME }}
 
-            # ✅ credentials.json 파일 생성 (base64 인코딩된 경우에는 decode 필요)
-            echo '${{ secrets.GOOGLE_CREDENTIALS }}' > /home/ubuntu/credentials.json
-
             # 컨테이너 실행
             docker run -d --name ${{ secrets.IMAGE_NAME }} -P \
               --network ${{secrets.DOCKER_NETWORK_NAME}} \
@@ -92,6 +89,7 @@ jobs:
               -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
               -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
               -e EUREKA_DEFAULTZONE="${{ secrets.EUREKA_DEFAULTZONE }}" \
+              -e GOOGLE_APPLICATION_CREDENTIALS="${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}" \
               -e MAIL_HOST="${{ secrets.MAIL_HOST }}" \
               -e MAIL_PORT="${{ secrets.MAIL_PORT }}" \
               -e MAIL_USERNAME="${{ secrets.MAIL_USERNAME }}" \
