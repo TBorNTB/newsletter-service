@@ -29,7 +29,7 @@ public class VerificationEmailService implements VerificationEmailSender {
             maxAttempts = 3,
             backoff = @Backoff(delay = 2000, multiplier = 2)
     )
-    public String send(String to, String code) {
+    public void send(String to, String code) {
         try {
             log.info("Sending email to " + to);
             MimeMessage message = mailSender.createMimeMessage();
@@ -42,7 +42,7 @@ public class VerificationEmailService implements VerificationEmailSender {
 
             mailSender.send(message);
             log.info("Email sent");
-            return to;
+            return;
         }catch (MessagingException e) {
             log.error("MessagingException occurred while sending email to {}: {}", to, e.getMessage(), e);
             throw new EmailSendException("메일 전송 중 오류가 발생했습니다.", e);

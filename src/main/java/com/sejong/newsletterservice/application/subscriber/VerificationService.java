@@ -16,8 +16,8 @@ public class VerificationService {
 
     public VerificationResponse sendVerification(SubscriberRequestVO subscriberRequestVO) {
         subscriberCacheService.save(subscriberRequestVO);
-        String email = verificationEmailSender.send(subscriberRequestVO.email(), subscriberRequestVO.code());
-        return VerificationResponse.of(email,"인증코드가 이메일로 전송되었습니다.");
+        verificationEmailSender.send(subscriberRequestVO.email(), subscriberRequestVO.code());
+        return VerificationResponse.of(subscriberRequestVO.email(),"인증코드가 이메일로 전송되었습니다.");
     }
 
     public SubscriberRequestVO verifyEmailCode(String email, String inputCode) {
