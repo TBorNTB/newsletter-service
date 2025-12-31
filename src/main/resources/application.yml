@@ -107,11 +107,14 @@ google:
     path: ${GOOGLE_APPLICATION_CREDENTIALS:/app/credentials.json}
 
 eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    prefer-ip-address: true
   client:
-    service-url:
-      defaultZone: ${EUREKA_DEFAULTZONE}
     register-with-eureka: true
     fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_DEFAULTZONE}
 
 resilience4j:
   circuitbreaker:
