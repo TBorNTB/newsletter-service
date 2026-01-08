@@ -89,3 +89,14 @@ resilience4j:
     instances:
       myFeignClient:
         timeoutDuration: 3s
+
+management:
+  server:
+    port: 18085  #이거는 매트릭을 수집하기 위한 고정 포트다.
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
