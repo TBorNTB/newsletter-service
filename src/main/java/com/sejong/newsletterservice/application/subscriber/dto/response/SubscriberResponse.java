@@ -20,4 +20,18 @@ public class SubscriberResponse {
                 .message("구독이 정상적으로 완료되었습니다.")
                 .build();
     }
+
+    public static SubscriberResponse deletedFrom(Subscriber subscriber) {
+        return SubscriberResponse.builder()
+                .email(subscriber.getEmail())
+                .message("구독 해제가 정상적으로 완료되었습니다.")
+                .build();
+    }
+
+    public static SubscriberResponse updatedFrom(Subscriber subscriber) {
+        return SubscriberResponse.builder()
+                .email(subscriber.getEmail())
+                .message("구독 설정이 변경되었습니다.")
+                .build();
+    }
 }
