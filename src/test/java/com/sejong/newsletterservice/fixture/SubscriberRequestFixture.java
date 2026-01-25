@@ -15,7 +15,8 @@ public class SubscriberRequestFixture {
         return new SubscriptionRequest(
                 "user@example.com",
                 EmailFrequency.DAILY,
-                List.of(TechCategory.CRYPTOGRAPHY, TechCategory.DIGITAL_FORENSICS)
+                List.of(TechCategory.CRYPTOGRAPHY, TechCategory.DIGITAL_FORENSICS),
+                false
         );
     }
 
@@ -24,6 +25,7 @@ public class SubscriberRequestFixture {
                 "user@example.com",
                 EmailFrequency.DAILY,
                 List.of(TechCategory.CRYPTOGRAPHY, TechCategory.DIGITAL_FORENSICS),
+                false,
                 "123456"
         );
     }
@@ -33,6 +35,7 @@ public class SubscriberRequestFixture {
                 "", // 잘못된 이메일
                 EmailFrequency.WEEKLY,
                 List.of(TechCategory.CRYPTOGRAPHY),
+                false,
                 "123456"
         );
     }
@@ -42,6 +45,7 @@ public class SubscriberRequestFixture {
                 "user@example.com",
                 EmailFrequency.WEEKLY,
                 List.of(), // 빈 카테고리
+                false,
                 "123456"
         );
     }

@@ -11,6 +11,7 @@ public class FakeSubscriberRepository implements SubscriberRepository {
     private final Map<Long, Subscriber> store = new HashMap<>();
     private long sequence = 1L;
 
+    @Override
     public Subscriber save(Subscriber subscriber) {
         Long id = subscriber.getId() != null ? subscriber.getId() : sequence++;
 
@@ -19,6 +20,7 @@ public class FakeSubscriberRepository implements SubscriberRepository {
                 .email(subscriber.getEmail())
                 .emailFrequency(subscriber.getEmailFrequency())
                 .createdAt(subscriber.getCreatedAt())
+                .active(subscriber.getActive())
                 .mailCategories(subscriber.getMailCategories())
                 .build();
 
@@ -32,6 +34,7 @@ public class FakeSubscriberRepository implements SubscriberRepository {
     }
 
 
+    @Override
     public List<Subscriber> findAll() {
         return new ArrayList<>(store.values());
     }
@@ -48,6 +51,21 @@ public class FakeSubscriberRepository implements SubscriberRepository {
 
     @Override
     public List<Subscriber> findByEmailFrequency(EmailFrequency frequency) {
-        return List.of();
+        return store.values().stream()
+                .filter(s -> Objects.equals(s.getEmailFrequency(), frequency))
+                .toList();
+    }
+
+    @Override
+    public Subscriber findOne(String email) {
+        return findOptional(email)
+                .orElseThrow(() -> new IllegalArgumentException("이메일 잘못된 요청"));
+    }
+
+    @Override
+    public Optional<Subscriber> findOptional(String email) {
+        return store.values().stream()
+                .filter(s -> Objects.equals(s.getEmail(), email))
+                .findFirst();
     }
 }

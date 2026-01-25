@@ -5,6 +5,8 @@ import com.sejong.newsletterservice.fixture.SubscriberRequestFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 class SubscriptionRequestTest {
 
     @DisplayName("SubscriberRequest.toVO()는 올바른 VO 객체를 반환한다.")
