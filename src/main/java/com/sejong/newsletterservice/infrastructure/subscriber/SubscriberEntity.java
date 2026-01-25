@@ -40,6 +40,9 @@ public class SubscriberEntity {
     @Column(nullable= false)
     private Boolean active;
 
+    @Column(nullable = false)
+    private Boolean chasingPopularity;
+
     @OneToMany(mappedBy = "subscriber", orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<MailCategoryEntity> mailCategories = new ArrayList<>();
@@ -51,6 +54,7 @@ public class SubscriberEntity {
                 .createdAt(subscriber.getCreatedAt())
                 .active(subscriber.getActive())
                 .mailCategories(new ArrayList<>())
+                .chasingPopularity(subscriber.getChasingPopularity())
                 .build();
     }
 
@@ -66,6 +70,7 @@ public class SubscriberEntity {
                 .createdAt(createdAt)
                 .mailCategories(domainCategories)
                 .active(active)
+                .chasingPopularity(chasingPopularity)
                 .build();
     }
 

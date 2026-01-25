@@ -2,12 +2,14 @@ package com.sejong.newsletterservice.application.subscriber;
 
 import com.sejong.newsletterservice.application.subscriber.dto.request.EmailRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.request.SubscriptionRequest;
-import com.sejong.newsletterservice.application.subscriber.dto.request.UpdatePreferencesVerifyRequest;
+import com.sejong.newsletterservice.application.subscriber.dto.request.UpdateSubscriptionRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.request.VerifyRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberCancelResponse;
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberResponse;
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberStatusResponse;
 import com.sejong.newsletterservice.application.subscriber.dto.response.VerificationResponse;
+import com.sejong.newsletterservice.core.error.code.ErrorCode;
+import com.sejong.newsletterservice.core.error.exception.ApiException;
 import com.sejong.newsletterservice.core.subscriber.vo.SubscriberRequestVO;
 import com.sejong.newsletterservice.core.util.RandomProvider;
 import io.swagger.v3.oas.annotations.Operation;
@@ -85,23 +87,24 @@ public class SubscriberController {
         @Operation(summary = "구독 설정 변경 인증 코드 발송", description = "구독 설정 변경을 위한 이메일 인증 코드를 발송합니다.")
         @PostMapping("/subscribers/preferences/verification-code")
         public ResponseEntity<VerificationResponse> updatePreferencesStart(
-                        @RequestBody @Valid EmailRequest emailRequest
+                        @RequestBody @Valid UpdateSubscriptionRequest request
         ) {
                 String code = RandomProvider.generateRandomCode(6);
-                VerificationResponse verificationResponse = verificationService.sendUpdateVerification(emailRequest, code);
+                SubscriberRequestVO vo = request.toVO(code);
+                VerificationResponse verificationResponse = verificationService.sendUpdateVerification(vo);
                 return ResponseEntity.status(HttpStatus.OK).body(verificationResponse);
         }
 
         @Operation(summary = "구독 설정 변경(인증 후)", description = "이메일 인증 코드를 검증한 뒤 카테고리/발송주기(Daily/Weekly) 설정을 변경합니다.")
         @PatchMapping("/subscribers/preferences/verify")
         public ResponseEntity<SubscriberResponse> updatePreferencesVerified(
-                        @Valid @RequestBody UpdatePreferencesVerifyRequest request
+                        @Valid @RequestBody VerifyRequest request
         ) {
-                String email = verificationService.verifyUpdateEmailCode(request.getEmail(), request.getCode());
-                if (!email.equals(request.getEmail())) {
-                        throw new IllegalArgumentException("이메일 정보 불일치");
+                SubscriberRequestVO verifiedVO = verificationService.verifyUpdateEmailCode(request.getEmail(), request.getCode());
+                if (!verifiedVO.email().equals(request.getEmail())) {
+                        throw new ApiException(ErrorCode.BAD_REQUEST, "이메일 정보 불일치");
                 }
-                SubscriberResponse response = subscriberService.updatePreferences(request.toUpdateRequest());
+                SubscriberResponse response = subscriberService.updatePreferences(verifiedVO);
                 return ResponseEntity.status(HttpStatus.OK).body(response);
         }
 

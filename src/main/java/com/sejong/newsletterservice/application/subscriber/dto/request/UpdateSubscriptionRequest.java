@@ -27,7 +27,10 @@ public class UpdateSubscriptionRequest {
     @NotEmpty
     private List<TechCategory> selectedCategories;
 
+    @NotNull
+    Boolean chasingPopularity;
+
     public SubscriberRequestVO toVO(String code) {
-        return new SubscriberRequestVO(email, emailFrequency, selectedCategories, false, code);
+        return new SubscriberRequestVO(email, emailFrequency, selectedCategories, chasingPopularity, code);
     }
 }

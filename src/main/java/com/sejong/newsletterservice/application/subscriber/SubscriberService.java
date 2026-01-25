@@ -1,8 +1,9 @@
 package com.sejong.newsletterservice.application.subscriber;
 
-import com.sejong.newsletterservice.application.subscriber.dto.request.UpdateSubscriptionRequest;
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberResponse;
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberStatusResponse;
+import com.sejong.newsletterservice.core.error.code.ErrorCode;
+import com.sejong.newsletterservice.core.error.exception.ApiException;
 import com.sejong.newsletterservice.core.mailgategory.MailCategory;
 import com.sejong.newsletterservice.core.subscriber.Subscriber;
 import com.sejong.newsletterservice.core.subscriber.SubscriberRepository;
@@ -43,14 +44,14 @@ public class SubscriberService {
     }
 
     @Transactional
-    public SubscriberResponse updatePreferences(UpdateSubscriptionRequest request) {
-        Subscriber subscriber = subscriberRepository.findOne(request.getEmail());
+    public SubscriberResponse updatePreferences(SubscriberRequestVO verifiedVO) {
+        Subscriber subscriber = subscriberRepository.findOne(verifiedVO.email());
         if (!Boolean.TRUE.equals(subscriber.getActive())) {
-            throw new IllegalStateException("구독 해제된 사용자입니다. 재구독은 인증 후 진행해주세요.");
+            throw new ApiException(ErrorCode.BAD_REQUEST, "구독 해제된 사용자입니다. 재구독은 인증 후 진행해주세요.");
         }
 
-        Subscriber updatedSubscriber = Subscriber.updatePreferencesFrom(subscriber, request.getEmailFrequency());
-        List<MailCategory> mailCategories = request.getSelectedCategories().stream()
+        Subscriber updatedSubscriber = Subscriber.updatePreferencesFrom(subscriber, verifiedVO.emailFrequency());
+        List<MailCategory> mailCategories = verifiedVO.selectedCategories().stream()
                 .map(MailCategory::of)
                 .toList();
 

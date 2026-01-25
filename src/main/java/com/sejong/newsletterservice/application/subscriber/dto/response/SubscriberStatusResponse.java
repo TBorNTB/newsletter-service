@@ -20,6 +20,7 @@ public class SubscriberStatusResponse {
     private EmailFrequency emailFrequency;
     private List<TechCategory> selectedCategories;
     private String message;
+    private boolean chasingPopularity;
 
     public static SubscriberStatusResponse notRegistered(String email) {
         return SubscriberStatusResponse.builder()
@@ -28,6 +29,7 @@ public class SubscriberStatusResponse {
                 .active(false)
                 .emailFrequency(null)
                 .selectedCategories(List.of())
+                .chasingPopularity(false)
                 .message("등록된 구독자가 없습니다.")
                 .build();
     }
@@ -40,6 +42,7 @@ public class SubscriberStatusResponse {
                 .active(isActive)
                 .emailFrequency(subscriber.getEmailFrequency())
                 .selectedCategories(subscriber.getSubscribedTechCategories())
+                .chasingPopularity(subscriber.getChasingPopularity())
                 .message(isActive ? "구독 중입니다." : "구독 해제 상태입니다.")
                 .build();
     }

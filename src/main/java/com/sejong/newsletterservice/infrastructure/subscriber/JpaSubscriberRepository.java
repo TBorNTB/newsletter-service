@@ -1,5 +1,7 @@
 package com.sejong.newsletterservice.infrastructure.subscriber;
 
+import com.sejong.newsletterservice.core.error.code.ErrorCode;
+import com.sejong.newsletterservice.core.error.exception.ApiException;
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
 import com.sejong.newsletterservice.core.subscriber.Subscriber;
 import com.sejong.newsletterservice.core.subscriber.SubscriberRepository;
@@ -32,7 +34,7 @@ public class JpaSubscriberRepository implements SubscriberRepository {
     @Override
     public Subscriber findOne(String email) {
         SubscriberEntity subscriberEntity = repository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("이메일 잘못된 요청"));
+                .orElseThrow(() -> new ApiException(ErrorCode.BAD_REQUEST, "등록된 이메일이 없습니다: " + email));
         return subscriberEntity.toDomain();
     }
 
@@ -44,7 +46,7 @@ public class JpaSubscriberRepository implements SubscriberRepository {
     @Override
     public Subscriber save(Subscriber subscriber) {
         SubscriberEntity subscriberEntity = repository.findByEmail(subscriber.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("이메일 잘못된 요청"));
+                .orElseThrow(() -> new ApiException(ErrorCode.BAD_REQUEST, "등록된 이메일이 없습니다: " + subscriber.getEmail()));
 
         if (Boolean.TRUE.equals(subscriber.getActive())) {
             subscriberEntity.registerActive();
