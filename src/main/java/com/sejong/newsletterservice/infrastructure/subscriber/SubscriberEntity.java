@@ -37,6 +37,9 @@ public class SubscriberEntity {
     @DateTimeFormat
     private LocalDateTime createdAt;
 
+    @Column(nullable= false)
+    private Boolean active;
+
     @OneToMany(mappedBy = "subscriber", orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<MailCategoryEntity> mailCategories = new ArrayList<>();
@@ -46,6 +49,7 @@ public class SubscriberEntity {
                 .email(subscriber.getEmail())
                 .emailFrequency(subscriber.getEmailFrequency())
                 .createdAt(subscriber.getCreatedAt())
+                .active(subscriber.getActive())
                 .mailCategories(new ArrayList<>())
                 .build();
     }
@@ -61,6 +65,19 @@ public class SubscriberEntity {
                 .emailFrequency(emailFrequency)
                 .createdAt(createdAt)
                 .mailCategories(domainCategories)
+                .active(active)
                 .build();
+    }
+
+    public void cancelSubscribe() {
+        this.active = false;
+    }
+
+    public void registerActive() {
+        this.active = true;
+    }
+
+    public void updateEmailFrequency(EmailFrequency emailFrequency) {
+        this.emailFrequency = emailFrequency;
     }
 }
