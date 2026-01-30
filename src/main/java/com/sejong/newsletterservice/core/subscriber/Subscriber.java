@@ -22,6 +22,7 @@ public class Subscriber {
     private EmailFrequency emailFrequency;
     private Boolean chasingPopularity;
     private LocalDateTime createdAt;
+    private Boolean active;
     @Builder.Default
     private List<MailCategory> mailCategories = new ArrayList<>();
 
@@ -30,6 +31,7 @@ public class Subscriber {
                 email(email)
                 .emailFrequency(emailFrequency)
                 .createdAt(createdAt)
+                .active(true)
                 .build();
     }
 
@@ -38,11 +40,30 @@ public class Subscriber {
                 .email(requestV0.email())
                 // 왜 category가 없지? 흠..
                 .emailFrequency(requestV0.emailFrequency())
+                .chasingPopularity(requestV0.chasingPopularity())
                 .createdAt(createdAt)
+                .active(true)
+                .build();
+    }
+
+    public static Subscriber updatePreferencesFrom(Subscriber existing, EmailFrequency emailFrequency) {
+        return Subscriber.builder()
+                .id(existing.getId())
+                .email(existing.getEmail())
+                .emailFrequency(emailFrequency)
+                .chasingPopularity(existing.getChasingPopularity())
+                .createdAt(existing.getCreatedAt())
+                .active(existing.getActive())
+                .mailCategories(existing.getMailCategories())
                 .build();
     }
 
     public List<TechCategory> getSubscribedTechCategories() {
         return mailCategories.stream().map(MailCategory::getTechCategory).toList();
+    }
+
+    public void cancelSubscribe() {
+        this.active=false;
+
     }
 }

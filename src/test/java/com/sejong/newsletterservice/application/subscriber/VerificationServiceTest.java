@@ -2,9 +2,7 @@ package com.sejong.newsletterservice.application.subscriber;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.sejong.newsletterservice.application.email.VerificationEmailSender;
@@ -37,40 +35,19 @@ class VerificationServiceTest {
     }
 
     @Test
-    void generateCode는_항상_6자리_숫자_문자열을_반환한다() {
-        // when
-        String code = verificationService.generateCode();
-
-        // then
-        assertNotNull(code, "코드는 null이 아니어야 한다.");
-        assertEquals(6, code.length(), "코드는 6자리어야 한다.");
-        assertTrue(code.matches("\\d{6}"), "코드는 숫자만 포함해야 한다.");
-
-        int numericCode = Integer.parseInt(code);
-        assertTrue(numericCode >= 100000 && numericCode <= 999999, "코드의 범위는 100000이상 999999이하");
-    }
-
-    @Test
-    void generateCode를_여러번_호출해도_형식은_일정하다() {
-        for (int i = 0; i < 1000; i++) {
-            String code = verificationService.generateCode();
-            assertEquals(6, code.length());
-            assertTrue(code.matches("\\d{6}"));
-        }
-    }
-
-    @Test
     void 인증번호를_전송한다() {
         // given
         SubscriberRequestVO requestVO = SubscriberRequestFixture.기본_요청_vo();
-        when(verificationEmailSender.send(requestVO.email(), requestVO.code())).thenReturn("user@example.com");
 
         // when
         VerificationResponse verificationResponse = verificationService.sendVerification(requestVO);
 
         // then
         assertThat(verificationResponse.getEmail()).isEqualTo("user@example.com");
-        assertThat(verificationResponse.getMessage()).isEqualTo("이메일이 성공적으로 전송되었습니다.");
+        assertThat(verificationResponse.getMessage()).isEqualTo("인증코드가 이메일로 전송되었습니다.");
+
+        verify(subscriberCacheService).save(requestVO);
+        verify(verificationEmailSender).send(requestVO.email(), requestVO.code());
     }
 
     @Test
@@ -103,11 +80,6 @@ class VerificationServiceTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("인증 정보 없음 또는 코드 불일치: " + email);
     }
-    public SubscriberRequestVO verifyEmailCode(String email, String inputCode) {
-        return subscriberCacheService.getEmailInfo(email)
-                .filter(info -> info.code().equals(inputCode))
-                .orElseThrow(() -> new IllegalArgumentException("인증 정보 없음 또는 코드 불일치: " + email));
-    }
 
     @Test
     void 인증코드가_일치하지_않으면_오류를_반환한다() {
@@ -120,7 +92,8 @@ class VerificationServiceTest {
                 email,
                 EmailFrequency.DAILY,
                 List.of(TechCategory.CRYPTOGRAPHY),
-                storeCode
+            false,
+            storeCode
         );
         when(subscriberCacheService.getEmailInfo(email)).thenReturn(Optional.of(storedVO));
 

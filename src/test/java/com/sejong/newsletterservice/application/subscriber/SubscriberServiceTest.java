@@ -26,7 +26,7 @@ class SubscriberServiceTest {
     void setUp() {
         fakeSubscriberRepository = new FakeSubscriberRepository();
         fakeMailCategoryRepository = new FakeMailCategoryRepository();
-        subscriberService = new SubscriberService(fakeMailCategoryRepository);
+        subscriberService = new SubscriberService(fakeMailCategoryRepository, fakeSubscriberRepository);
     }
 
     @Test

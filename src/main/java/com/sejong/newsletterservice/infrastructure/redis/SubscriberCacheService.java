@@ -17,9 +17,24 @@ public class SubscriberCacheService {
     private String key(String email) {
         return "verify:" + email;
     }
+    private String cancelKey(String email) {
+        return "cancel:" + email;
+    }
+
+    private String updateKey(String email) {
+        return "update:" + email;
+    }
 
     public void save(SubscriberRequestVO vo) {
         redisTemplate.opsForValue().set(key(vo.email()),vo,TTL);
+    }
+
+    public void saveUpdate(SubscriberRequestVO vo) {
+        redisTemplate.opsForValue().set(updateKey(vo.email()), vo, TTL);
+    }
+
+    public void save(String email , String code) {
+        redisTemplate.opsForValue().set(cancelKey(email),code,TTL);
     }
 
     public Optional<SubscriberRequestVO> getEmailInfo(String email) {
@@ -30,7 +45,27 @@ public class SubscriberCacheService {
         return Optional.empty();
     }
 
+    public Optional<SubscriberRequestVO> getUpdateInfo(String email) {
+        Object obj = redisTemplate.opsForValue().get(updateKey(email));
+        if (obj instanceof SubscriberRequestVO vo) {
+            return Optional.of(vo);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<String> getEmailCode(String email) {
+        Object obj = redisTemplate.opsForValue().get(cancelKey(email));
+        if (obj instanceof String code) {
+            return Optional.of(code);
+        }
+        return Optional.empty();
+    }
+
     public void remove(String email){
         redisTemplate.delete(key(email));
+    }
+
+    public void removeUpdate(String email) {
+        redisTemplate.delete(updateKey(email));
     }
 }
