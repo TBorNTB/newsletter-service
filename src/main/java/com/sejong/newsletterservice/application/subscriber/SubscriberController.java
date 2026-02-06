@@ -58,6 +58,16 @@ public class SubscriberController {
                 .body(response);
     }
 
+    @Operation(summary = "단순 이메일 인증 api", description = "단순 이메일 인증 api")
+    @PostMapping("/subscribers/verify/email")
+    public ResponseEntity<SubscriberResponse> verifyCodeOnlyEmail(@RequestBody VerifyRequest request) {
+        SubscriberRequestVO subscriberRequestVO = verificationService.verifyEmailCode(request.getEmail(), request.getCode());
+        SubscriberResponse response = SubscriberResponse.from(subscriberRequestVO.email());
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(response);
+    }
+
     @Operation(summary = "구독 해제 이메일 인증코드 발송", description = "구독 해제시 이메일 인증을 위한 api")
     @PostMapping("/subscribers/verify/cancel")
     public ResponseEntity<VerificationResponse> subscriberCancelStart(
@@ -82,7 +92,6 @@ public class SubscriberController {
                 .body(response);
 
     }
-
 
         @Operation(summary = "구독 설정 변경 인증 코드 발송", description = "구독 설정 변경을 위한 이메일 인증 코드를 발송합니다.")
         @PostMapping("/subscribers/preferences/verification-code")

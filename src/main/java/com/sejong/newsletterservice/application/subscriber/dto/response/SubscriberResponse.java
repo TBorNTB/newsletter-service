@@ -34,4 +34,11 @@ public class SubscriberResponse {
                 .message("구독 설정이 변경되었습니다.")
                 .build();
     }
+
+    public static SubscriberResponse from(String email) {
+        return SubscriberResponse.builder()
+                .email(email)
+                .message("구독 설정이 변경되었습니다.")
+                .build();
+    }
 }
