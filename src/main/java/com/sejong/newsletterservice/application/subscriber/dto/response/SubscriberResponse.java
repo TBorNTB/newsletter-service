@@ -38,7 +38,7 @@ public class SubscriberResponse {
     public static SubscriberResponse from(String email) {
         return SubscriberResponse.builder()
                 .email(email)
-                .message("구독 설정이 변경되었습니다.")
+                .message("메일이 인증 되었습니다.")
                 .build();
     }
 }
