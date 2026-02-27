@@ -17,6 +17,7 @@ spring:
     init:
       mode: always # 필요없으면 never로 설정
 
+
   jpa:
     hibernate:
       ddl-auto: create-drop
