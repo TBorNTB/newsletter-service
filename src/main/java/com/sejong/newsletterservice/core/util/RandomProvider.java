@@ -9,6 +9,6 @@ public class RandomProvider {
 
     public static String generateRandomCode(int length) {
         int upperLimit = (int) Math.pow(10, length);
-        return String.valueOf(random.nextInt(upperLimit));
+        return String.format("%0" + length + "d", random.nextInt(upperLimit));
     }
 }
