@@ -36,8 +36,8 @@ public class VerificationEmailService implements VerificationEmailSender {
             MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 
             helper.setTo(to);
-            helper.setFrom("your_email@gmail.com", "뉴스레터");
-            helper.setSubject("[뉴스레터] 이메일 인증을 진행해주세요.");
+            helper.setFrom("your_email@gmail.com", "SSG 보안동아리");
+            helper.setSubject("[SSG 보안동아리] 이메일 인증을 진행해주세요.");
             helper.setText(emailContentBuilder.buildVerificationHtml(code) , true);
 
             mailSender.send(message);
