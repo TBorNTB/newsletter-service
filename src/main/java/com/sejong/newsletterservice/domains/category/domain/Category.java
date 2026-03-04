@@ -34,15 +34,15 @@ public class Category {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "icon_key", length = 512)
-    private String iconKey;
+    @Column(name = "icon_url", length = 512)
+    private String iconUrl;
 
-    public static Category of(String name, String description, String content, String iconKey) {
+    public static Category of(String name, String description, String content, String iconUrl) {
         return Category.builder()
                 .name(name)
                 .description(description)
                 .content(content)
-                .iconKey(iconKey)
+                .iconUrl(iconUrl)
                 .build();
     }
 
@@ -54,8 +54,8 @@ public class Category {
         this.content = content;
     }
 
-    public void updateIconKey(String iconKey) {
-        this.iconKey = iconKey;
+    public void updateIconUrl(String iconKey) {
+        this.iconUrl = iconUrl;
     }
 
     @Override
