@@ -2,8 +2,8 @@ package com.sejong.newsletterservice.application.subscriber;
 
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberResponse;
 import com.sejong.newsletterservice.application.subscriber.dto.response.SubscriberStatusResponse;
-import com.sejong.newsletterservice.core.error.code.ErrorCode;
-import com.sejong.newsletterservice.core.error.exception.ApiException;
+import com.sejong.newsletterservice.support.exception.ErrorCode;
+import com.sejong.newsletterservice.support.exception.ApiException;
 import com.sejong.newsletterservice.core.mailgategory.MailCategory;
 import com.sejong.newsletterservice.core.subscriber.Subscriber;
 import com.sejong.newsletterservice.core.subscriber.SubscriberRepository;

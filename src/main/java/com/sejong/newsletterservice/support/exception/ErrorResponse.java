@@ -1,6 +1,5 @@
-package com.sejong.newsletterservice.application.error.api;
+package com.sejong.newsletterservice.support.exception;
 
-import com.sejong.newsletterservice.core.error.code.ErrorCodeIfs;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +14,7 @@ public class ErrorResponse {
     private String resultMessage;
     private String resultDescription;
 
-    public static ErrorResponse ERROR(ErrorCodeIfs errorCodeIfs, String description) {
+    public static ErrorResponse of(ErrorCodeIfs errorCodeIfs, String description) {
         return ErrorResponse.builder()
                 .resultCode(errorCodeIfs.getErrorCode())
                 .resultMessage(errorCodeIfs.getDescription())

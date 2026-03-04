@@ -1,7 +1,7 @@
 package com.sejong.newsletterservice.infrastructure.subscriber;
 
-import com.sejong.newsletterservice.core.error.code.ErrorCode;
-import com.sejong.newsletterservice.core.error.exception.ApiException;
+import com.sejong.newsletterservice.support.exception.ErrorCode;
+import com.sejong.newsletterservice.support.exception.ApiException;
 import com.sejong.newsletterservice.core.enums.EmailFrequency;
 import com.sejong.newsletterservice.core.subscriber.Subscriber;
 import com.sejong.newsletterservice.core.subscriber.SubscriberRepository;

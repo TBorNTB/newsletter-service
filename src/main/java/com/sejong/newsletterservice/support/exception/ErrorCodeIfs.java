@@ -1,4 +1,4 @@
-package com.sejong.newsletterservice.core.error.code;
+package com.sejong.newsletterservice.support.exception;
 
 public interface ErrorCodeIfs {
     Integer getHttpStatusCode();
