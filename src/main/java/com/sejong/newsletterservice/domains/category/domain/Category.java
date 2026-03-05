@@ -2,10 +2,9 @@ package com.sejong.newsletterservice.domains.category.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +12,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "category")
+@Table(name = "category", uniqueConstraints = {
+        @UniqueConstraint(
+                name = "uk_id_name",
+                columnNames = {"category_id", "name"}
+        )
+})
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +26,7 @@ public class Category {
 
     @Id
     @Column(name = "category_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY) // project-service와 같은 id를 가져야 함
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -44,18 +48,6 @@ public class Category {
                 .content(content)
                 .iconUrl(iconUrl)
                 .build();
-    }
-
-    public void updateDescription(String description) {
-        this.description = description;
-    }
-
-    public void updateContent(String content) {
-        this.content = content;
-    }
-
-    public void updateIconUrl(String iconKey) {
-        this.iconUrl = iconUrl;
     }
 
     @Override
