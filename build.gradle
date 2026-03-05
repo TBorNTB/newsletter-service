@@ -81,6 +81,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     //prometheus를 이용한 데이터 통계
     implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    // Kafka (Messaging)
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 
 dependencyManagement {
