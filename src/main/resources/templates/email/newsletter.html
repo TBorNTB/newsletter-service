@@ -60,12 +60,16 @@
                         <!-- 다중 컨텐츠 -->
                         <div th:if="${contents != null}">
                             <div th:each="item : ${contents}" style="background-color: #f8fafc; border-left: 3px solid #2563eb; border-radius: 6px; padding: 20px; margin-bottom: 16px;">
-                                <h3 th:text="${item.title}" style="margin: 0 0 12px 0; font-size: 17px; font-weight: 600; color: #1e293b;">
+                                <h3 th:text="${item.title}" style="margin: 0 0 8px 0; font-size: 17px; font-weight: 600; color: #1e293b;">
                                     컨텐츠 제목
                                 </h3>
-                                <p th:text="${item.content}" style="margin: 0; font-size: 14px; color: #64748b; line-height: 1.6;">
+                                <p th:text="${#strings.abbreviate(item.content, 120)}" style="margin: 0 0 16px 0; font-size: 14px; color: #64748b; line-height: 1.6;">
                                     컨텐츠 내용
                                 </p>
+                                <a th:href="${item.url}"
+                                   style="display: inline-block; padding: 8px 20px; background-color: #2563eb; color: #ffffff; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: 500;">
+                                    자세히 보기
+                                </a>
                             </div>
                         </div>
 

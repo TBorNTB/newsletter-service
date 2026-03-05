@@ -2,8 +2,7 @@ package com.sejong.newsletterservice.support.email;
 
 import com.sejong.newsletterservice.support.feign.response.ContentResponse;
 import java.time.LocalDateTime;
-import java.util.List;
-import lombok.RequiredArgsConstructor;
+import java.util.List;import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -26,7 +25,7 @@ public class EmailContentBuilder {
     public String buildPostHtml(String title, ContentResponse response, String email) {
         Context context = new Context();
         context.setVariable("title", title);
-        context.setVariable("link", "https://your-domain/");
+        context.setVariable("link", response.getUrl());
         context.setVariable("email", email);
         context.setVariable("content", response);
         context.setVariable("date", LocalDateTime.now());
@@ -36,7 +35,6 @@ public class EmailContentBuilder {
     public String buildPostsHtml(String title, List<ContentResponse> responses, String email) {
         Context context = new Context();
         context.setVariable("title", title);
-        context.setVariable("link", "https://your-domain/");
         context.setVariable("email", email);
         context.setVariable("contents", responses);
         context.setVariable("date", LocalDateTime.now());
@@ -48,4 +46,5 @@ public class EmailContentBuilder {
         context.setVariable("code", code);
         return templateEngine.process("email/verification", context);
     }
+
 }
