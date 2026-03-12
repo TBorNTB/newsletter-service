@@ -25,9 +25,16 @@ public class NewsletterScheduler {
 
     @Scheduled(cron = "0 0 11 * * FRI", zone = "Asia/Seoul")
     public void sendWeeklyInteresting() {
-        log.info("관심 카테고리 뉴스레터 전송 시작");
+        log.info("weekly 관심 카테고리 뉴스레터 전송 시작");
         Long count = newsletterService.sendInterestingContents(EmailFrequency.WEEKLY);
-        log.info("관심 카테고리 전송 완료. 전송 수: {}", count);
+        log.info("weekly 관심 카테고리 전송 완료. 전송 수: {}", count);
+    }
+
+    @Scheduled(cron = "0 0 11 * * *", zone = "Asia/Seoul")
+    public void sendDailyInteresting() {
+        log.info("daily 관심 카테고리 뉴스레터 전송 시작");
+        Long count = newsletterService.sendInterestingContents(EmailFrequency.DAILY);
+        log.info("daily 관심 카테고리 전송 완료. 전송 수: {}", count);
     }
 
     @GetMapping("/test-mail")
