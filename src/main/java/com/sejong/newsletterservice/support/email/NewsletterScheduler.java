@@ -19,7 +19,7 @@ public class NewsletterScheduler {
     @Scheduled(cron = "0 0 15 * * FRI", zone = "Asia/Seoul")
     public void sendWeeklyPopular() {
         log.info("주간 인기글 뉴스레터 전송 시작");
-        Long count = newsletterService.sendPopularContents(EmailFrequency.WEEKLY);
+        Long count = newsletterService.sendPopularContents();
         log.info("주간 인기글 전송 완료. 전송 수: {}", count);
     }
 
@@ -39,7 +39,7 @@ public class NewsletterScheduler {
 
     @GetMapping("/test-mail")
     public String testMail() {
-        newsletterService.sendPopularContents(EmailFrequency.DAILY);
+        newsletterService.sendPopularContents();
         return "메일 전송 완료";
     }
 }

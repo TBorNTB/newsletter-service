@@ -21,9 +21,9 @@ public class NewsletterService {
     private final ElasticServiceClient elasticServiceClient;
 
     @Transactional(readOnly = true)
-    public Long sendPopularContents(EmailFrequency frequency) {
+    public Long sendPopularContents() {
         ContentResponse content = elasticServiceClient.getWeeklyPopularContent();
-        List<Subscriber> subscribers = subscriberRepository.findActiveByEmailFrequency(frequency);
+        List<Subscriber> subscribers = subscriberRepository.findByActiveTrueAndChasingPopularityTrue();
         subscribers.forEach(s -> newsletterEmailSender.sendPopularContent(s.getEmail(), "주간 인기글", content));
         return (long) subscribers.size();
     }

@@ -17,4 +17,6 @@ public interface SubscriberRepository extends JpaRepository<Subscriber, Long> {
 
     @Query("SELECT DISTINCT s FROM Subscriber s LEFT JOIN FETCH s.subscriberCategories sc LEFT JOIN FETCH sc.category WHERE s.emailFrequency = :frequency AND s.active = true")
     List<Subscriber> findActiveByEmailFrequency(@Param("frequency") EmailFrequency frequency);
+
+    List<Subscriber> findByActiveTrueAndChasingPopularityTrue();
 }
